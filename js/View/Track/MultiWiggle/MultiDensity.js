@@ -29,8 +29,11 @@ return declare( WiggleBase, {
     _drawFeatures: function( scale, leftBase, rightBase, block, canvas, pixels, dataScale ) {
         var thisB = this;
         var context = canvas.getContext('2d');
-        var canvasHeight = canvas.height/Object.keys(this.map).length;
+        var canvasHeight = canvas.height;
+        var eltSize = canvasHeight/Object.keys(this.map).length;
         var normalize = dataScale.normalize;
+
+        console.log(eltSize);
 
         var featureColor = typeof this.config.style.color == 'function' ? this.config.style.color :
             (function() { // default color function uses conf variables
@@ -55,21 +58,22 @@ return declare( WiggleBase, {
 
         array.forEach( pixels, function(p,i) {
             if (p) {
-                var score = p.score;
-                var f = p.feat;
-                var pos = thisB.map[p.feat.storeName];
-
-                var n = dataScale.normalize( score );
-                context.fillStyle = ''+featureColor( p, n );
-                thisB._fillRectMod( context, i, pos*canvasHeight, 1, (pos+1)*canvasHeight );
-                if( n > 1 ) { // pos clipped
-                    context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
-                    thisB._fillRectMod( context, i, 0, 1, 3 );
-                }
-                else if( n < 0 ) { // neg clipped
-                    context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
-                    thisB._fillRectMod( context, i, canvasHeight-3, 1, 3 );
-               }
+                array.forEach( p, function(pi, j) {
+                    console.log("here",pi,j);
+                    var score = pi.score;
+                    var f = pi.feat;
+                    var n = dataScale.normalize( score );
+                    context.fillStyle = ''+featureColor( pi, n );
+                    thisB._fillRectMod( context, i, j*canvasHeight, 1, (j+1)*canvasHeight );
+                    if( n > 1 ) { // pos clipped
+                        context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
+                        thisB._fillRectMod( context, i, 0, 1, 3 );
+                    }
+                    else if( n < 0 ) { // neg clipped
+                        context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
+                        thisB._fillRectMod( context, i, canvasHeight-3, 1, 3 );
+                    }
+                })
             }
         });
     },
