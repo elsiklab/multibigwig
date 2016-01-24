@@ -33,11 +33,10 @@ define( [
 
 return declare( WiggleBase, {
 
-    constructor: function() {
+    constructor: function( args ) {
         this.map = {};
         array.forEach( args.config.urlTemplates, function(urlTemplate, i) { this.map[urlTemplate.name] = i; }, this);
-        this.inherited(arguments);
-    }
+    },
     _calculatePixelScores: function( canvasWidth, features, featureRects ) {
         var scoreType = this.config.scoreType;
         var pixelValues = new Array( canvasWidth );
@@ -48,32 +47,20 @@ return declare( WiggleBase, {
             var fRect = featureRects[i];
             var jEnd = fRect.r;
             var score = f.get(scoreType) || f.get('score');
-            var k = thisB.map[f.storeName];
+            var k = thisB.map[f.get('source')];
+            var ks = Object.keys(thisB.map).length;
             for( var j = Math.round(fRect.l); j < jEnd; j++ ) {
-                if ( pixelValues[j] && pixelValues[j][k]['lastUsedStore'] == store ) {
-                    /* Note: if the feature is from a different store, the condition should fail,
-                     *       and we will add to the value, rather than adjusting for overlap */
-                    pixelValues[j][k]['score'] = Math.max( pixelValues[j][k]['score'], score );
+                if(!pixelValues[j]) {
+                    pixelValues[j] = new Array( ks );
                 }
-                else if ( pixelValues[j][k] ) {
-                    pixelValues[j][k]['score'] = pixelValues[j][k]['score'] + score;
-                    pixelValues[j][k]['lastUsedStore'] = store;
-                }
-                else {
-                    if(!pixelValues[j][k]) pixelValues[j][k] = []
-                    pixelValues[j][k] = { score: score, lastUsedStore: store, feat: f };
+                if(!pixelValues[j][k]) {
+                    pixelValues[j][k] = { score: score, feat: f };
                 }
             }
         }, this);
-        // when done looping through features, forget the store information.
-        for (var i=0; i<pixelValues.length; i++) {
-            for (var j=0; i<pixelValues[i].length; j++) {
-                if ( pixelValues[i]&&pixelValues[i][j] ) {
-                    delete pixelValues[i][j]['lastUsedStore'];
-                }
-            }
-        }
-        
+
+        array.forEach(pixelValues, function(p) { var l; array.forEach(p, function(pl) { if(pl) l++; }); if(l) console.log(l); });
+       
         return pixelValues;
     }
 

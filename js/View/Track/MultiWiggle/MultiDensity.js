@@ -2,13 +2,18 @@ define( [
             'dojo/_base/declare',
             'dojo/_base/array',
             'dojo/_base/Color',
-            'JBrowse/View/Track/WiggleBase',
+            'MultiBigWig/View/Track/MultiWiggleBase',
             'JBrowse/Util'
         ],
-        function( declare, array, Color, WiggleBase, Util ) {
+        function(
+            declare,
+            array,
+            Color,
+            MultiWiggleBase,
+            Util
+        ) {
 
-return declare( WiggleBase, {
-
+return declare( MultiWiggleBase, {
 
     _defaultConfig: function() {
         return Util.deepUpdate(
@@ -16,7 +21,7 @@ return declare( WiggleBase, {
             {
                 maxExportSpan: 500000,
                 style: {
-                    height: 100,
+                    height: 31,
                     pos_color: '#00f',
                     neg_color: '#f00',
                     bg_color: 'rgba(230,230,230,0.6)',
@@ -25,16 +30,11 @@ return declare( WiggleBase, {
             }
         );
     },
-
     _drawFeatures: function( scale, leftBase, rightBase, block, canvas, pixels, dataScale ) {
         var thisB = this;
         var context = canvas.getContext('2d');
         var canvasHeight = canvas.height;
-        var eltSize = canvasHeight/Object.keys(this.map).length;
         var normalize = dataScale.normalize;
-
-        console.log(eltSize);
-
         var featureColor = typeof this.config.style.color == 'function' ? this.config.style.color :
             (function() { // default color function uses conf variables
                 var disableClipMarkers = thisB.config.disable_clip_markers;
@@ -56,53 +56,30 @@ return declare( WiggleBase, {
                 };
             })();
 
+        var kheight = canvasHeight/Object.keys(this.map).length;
         array.forEach( pixels, function(p,i) {
             if (p) {
                 array.forEach( p, function(pi, j) {
-                    console.log("here",pi,j);
-                    var score = pi.score;
-                    var f = pi.feat;
-                    var n = dataScale.normalize( score );
-                    context.fillStyle = ''+featureColor( pi, n );
-                    thisB._fillRectMod( context, i, j*canvasHeight, 1, (j+1)*canvasHeight );
-                    if( n > 1 ) { // pos clipped
-                        context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
-                        thisB._fillRectMod( context, i, 0, 1, 3 );
-                    }
-                    else if( n < 0 ) { // neg clipped
-                        context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
-                        thisB._fillRectMod( context, i, canvasHeight-3, 1, 3 );
+                    if(pi) {
+                        var score = pi.score;
+                        var f = pi.feat;
+                        var n = dataScale.normalize( score );
+                        console.log(pi,n,score);
+                        context.fillStyle = ''+featureColor( pi, n );
+                        thisB._fillRectMod( context, i, j*kheight, 1, kheight );
+//                        if( n > 1 ) { // pos clipped
+//                            context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
+//                            thisB._fillRectMod( context, i, 0, 1, 3 );
+//                        }
+//                        else if( n < 0 ) { // neg clipped
+//                            context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
+//                            thisB._fillRectMod( context, i, canvasHeight-3, 1, 3 );
+//                        }
                     }
                 })
             }
         });
-    },
-
-    /* If boolean track, mask accordingly */
-    _maskBySpans: function( scale, leftBase, rightBase, block, canvas, pixels, dataScale, spans ) {
-        var context = canvas.getContext('2d');
-        var canvasHeight = canvas.height;
-        context.fillStyle = this.config.style.mask_color || 'rgba(128,128,128,0.6)';
-        this.config.style.mask_color = context.fillStyle;
-
-        for ( var index in spans ) {
-            if( spans.hasOwnProperty(index) ) {
-                var w = Math.ceil(( spans[index].end   - spans[index].start ) * scale );
-                var l = Math.round(( spans[index].start - leftBase ) * scale );
-                context.fillRect( l, 0, w, canvasHeight );
-                context.clearRect( l, 0, w, canvasHeight/3);
-                context.clearRect( l, (2/3)*canvasHeight, w, canvasHeight/3);
-            }
-        }
-        array.forEach( pixels, function(p,i) {
-            if (!p) {
-                // if there is no data at a point, erase the mask.
-                context.clearRect( i, 0, 1, canvasHeight );
-            }
-        });
-    },
-
-   _postDraw: function() {}
+    }
 
 });
 });

@@ -57,7 +57,6 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
         array.forEach( this.stores, function(store) {
             store._getFeatures( query,
                 function(features) {
-                    features.storeName = store.name;
                     featureCallback(features);
                 }
                 , endCallback
