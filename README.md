@@ -5,6 +5,10 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
 
 
 ![](img/out.png)
+
+
+## Example track JSON
+
       {
          "storeClass" : "MultiBigWig/Store/SeqFeature/MultiBigWig",
          "urlTemplates" : [
