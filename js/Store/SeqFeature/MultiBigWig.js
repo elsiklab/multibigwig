@@ -38,7 +38,6 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
     constructor: function( args ) {
         var thisB = this;
         this.stores = array.map( args.urlTemplates, function( urlTemplate ) {
-            console.log(urlTemplate);
             return new BigWig( dojo.mixin( args, { urlTemplate: urlTemplate.url, name: urlTemplate.name } ) );
         });
 
@@ -53,14 +52,16 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
 
     
     getFeatures: function( query, featureCallback, endCallback, errorCallback ) {
-        var retobj = {}; 
+        var thisB = this;
+        var finished = 0;
+        var finishCallback = function() {
+            if(thisB.stores.length == ++finished) {
+                endCallback();
+            }
+        }
         array.forEach( this.stores, function(store) {
             store._getFeatures( query,
-                function(features) {
-                    featureCallback(features);
-                }
-                , endCallback
-                , errorCallback
+                featureCallback, finishCallback, errorCallback
             );
         });
 

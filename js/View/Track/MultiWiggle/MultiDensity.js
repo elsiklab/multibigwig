@@ -64,7 +64,6 @@ return declare( MultiWiggleBase, {
                         var score = pi.score;
                         var f = pi.feat;
                         var n = dataScale.normalize( score );
-                        console.log(pi,n,score);
                         context.fillStyle = ''+featureColor( pi, n );
                         thisB._fillRectMod( context, i, j*kheight, 1, kheight );
 //                        if( n > 1 ) { // pos clipped

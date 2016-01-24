@@ -46,7 +46,7 @@ return declare( WiggleBase, {
             var store = f.source;
             var fRect = featureRects[i];
             var jEnd = fRect.r;
-            var score = f.get(scoreType) || f.get('score');
+            var score = f.get('score');
             var k = thisB.map[f.get('source')];
             var ks = Object.keys(thisB.map).length;
             for( var j = Math.round(fRect.l); j < jEnd; j++ ) {
@@ -59,8 +59,6 @@ return declare( WiggleBase, {
             }
         }, this);
 
-        array.forEach(pixelValues, function(p) { var l; array.forEach(p, function(pl) { if(pl) l++; }); if(l) console.log(l); });
-       
         return pixelValues;
     }
 
