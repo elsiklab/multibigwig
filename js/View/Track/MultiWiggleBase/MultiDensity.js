@@ -9,12 +9,6 @@ define( [
 
 return declare( WiggleBase, {
 
-    constructor: function( args ) {
-        this.map = {};
-        array.forEach( args.config.urlTemplates, function(urlTemplate, i) {
-            this.map[urlTemplate.name] = i;
-        }, this)
-    },
 
     _defaultConfig: function() {
         return Util.deepUpdate(

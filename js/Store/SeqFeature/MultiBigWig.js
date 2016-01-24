@@ -10,7 +10,7 @@ define( [
             'JBrowse/Store/SeqFeature',
             'JBrowse/Store/DeferredStatsMixin',
             'JBrowse/Store/DeferredFeaturesMixin',
-            './BigWig',
+            'JBrowse/Store/SeqFeature/BigWig',
             'JBrowse/Util',
             'JBrowse/Model/XHRBlob'
         ],
