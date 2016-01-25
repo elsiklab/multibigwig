@@ -13,6 +13,8 @@ define( [
             Util
         ) {
 
+var dojof = Util.dojof;
+
 return declare( MultiWiggleBase, {
 
     _defaultConfig: function() {
@@ -56,7 +58,8 @@ return declare( MultiWiggleBase, {
                 };
             })();
 
-        var kheight = canvasHeight/Object.keys(this.map).length;
+        var resolution = Util.getResolution( context, this.browser.config.highResolutionMode );
+        var kheight = canvasHeight/(dojof.keys(this.map).length*resolution);
         array.forEach( pixels, function(p,i) {
             if (p) {
                 array.forEach( p, function(pi, j) {
