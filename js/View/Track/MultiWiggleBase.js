@@ -2,32 +2,12 @@ define( [
             'dojo/_base/declare',
             'dojo/_base/array',
             'dojo/_base/lang',
-            'dojo/_base/event',
-            'dojo/dom-construct',
-            'dojo/on',
-            'dojo/mouse',
-            'JBrowse/View/Track/BlockBased',
-            'JBrowse/View/Track/_ExportMixin',
-            'JBrowse/View/Track/_TrackDetailsStatsMixin',
-            'JBrowse/View/Dialog/SetTrackHeight',
-            'JBrowse/Util',
-            'JBrowse/has',
             'JBrowse/View/Track/WiggleBase'
         ],
         function(
             declare,
             array,
             lang,
-            domEvent,
-            dom,
-            on,
-            mouse,
-            BlockBasedTrack,
-            ExportMixin,
-            DetailStatsMixin,
-            TrackHeightDialog,
-            Util,
-            has,
             WiggleBase
         ) {
 

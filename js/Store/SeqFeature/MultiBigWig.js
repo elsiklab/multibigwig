@@ -2,33 +2,21 @@ define( [
             'dojo/_base/declare',
             'dojo/_base/lang',
             'dojo/_base/array',
-            'dojo/_base/url',
             'dojo/promise/all',
-            'JBrowse/Model/DataView',
-            'JBrowse/has',
-            'JBrowse/Errors',
             'JBrowse/Store/SeqFeature',
             'JBrowse/Store/DeferredStatsMixin',
             'JBrowse/Store/DeferredFeaturesMixin',
-            'JBrowse/Store/SeqFeature/BigWig',
-            'JBrowse/Util',
-            'JBrowse/Model/XHRBlob'
+            'JBrowse/Store/SeqFeature/BigWig'
         ],
         function(
             declare,
             lang,
             array,
-            urlObj,
             all,
-            jDataView,
-            has,
-            JBrowseErrors,
             SeqFeatureStore,
             DeferredFeaturesMixin,
             DeferredStatsMixin,
-            BigWig,
-            Util,
-            XHRBlob
+            BigWig
         ) {
 return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
 {
