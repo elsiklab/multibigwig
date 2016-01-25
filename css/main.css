@@ -1,0 +1,15 @@
+
+div.track-sublabel {
+    z-index: 10;
+    padding: 1px 6px;
+    overflow: hidden;
+    cursor: pointer;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: #999;
+
+
+    color: #111;
+    font-weight: bold;
+}
