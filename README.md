@@ -28,5 +28,10 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
          "type" : "MultiBigWig/View/Track/MultiWiggle/MultiDensity"
       }
 
+## Install
+
+- Clone repo into plugins folder in JBrowse
+- Add "plugins": ["MultiBigWig"] to trackList.json or jbrowse_conf.json
+
 
 Still in beta! Feel free to provide feedback
