@@ -66,14 +66,6 @@ return declare( MultiWiggleBase, {
                         var n = dataScale.normalize( score );
                         context.fillStyle = ''+featureColor( pi, n );
                         thisB._fillRectMod( context, i, j*kheight, 1, kheight );
-//                        if( n > 1 ) { // pos clipped
-//                            context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
-//                            thisB._fillRectMod( context, i, 0, 1, 3 );
-//                        }
-//                        else if( n < 0 ) { // neg clipped
-//                            context.fillStyle = thisB.getConfForFeature('style.clip_marker_color', f) || 'red';
-//                            thisB._fillRectMod( context, i, canvasHeight-3, 1, 3 );
-//                        }
                     }
                 })
             }
