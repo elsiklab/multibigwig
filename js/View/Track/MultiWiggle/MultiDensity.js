@@ -58,8 +58,10 @@ return declare( MultiWiggleBase, {
                 };
             })();
 
+        var left = block.bpToX( leftBase );
         var resolution = Util.getResolution( context, this.browser.config.highResolutionMode );
-        var kheight = canvasHeight/(dojof.keys(this.map).length*resolution);
+        var kheight = canvasHeight / ( dojof.keys(this.map).length * resolution );
+
         array.forEach( pixels, function(p,i) {
             if (p) {
                 array.forEach( p, function(pi, j) {
@@ -73,6 +75,34 @@ return declare( MultiWiggleBase, {
                 })
             }
         });
+    },
+    makeTrackLabel: function() {
+        this.inherited(arguments);
+        console.log('new track label');
+        if(this.config.showLabels) {
+            this.sublabels = array.map( dojof.keys(this.map), function(key, i) {
+                return dojo.create(
+                    'div', {
+                        className: "track-sublabel",
+                        id: "sublabel_" + key,
+                        style: {
+                            position: 'absolute'
+                        },
+                        innerHTML: key
+                    }, this.div);
+            }, this);
+        }
+    },
+    updateStaticElements: function( /**Object*/ coords ) {
+        this.inherited(arguments);
+        var height = this.config.style.height;
+        if( this.sublabels && 'x' in coords ) {
+            array.forEach(this.sublabels, function(sublabel, i) {
+                sublabel.style.left = coords.x+'px';
+                sublabel.style.fontSize = (height/this.sublabels.length-5)+'px';
+                sublabel.style.top = i*height/this.sublabels.length+'px';
+            }, this);
+        }
     }
 
 });
