@@ -3,14 +3,20 @@ define( [
             'dojo/_base/array',
             'dojo/_base/Color',
             'MultiBigWig/View/Track/MultiWiggleBase',
-            'JBrowse/Util'
+            'JBrowse/Util',
+            'dijit/Tooltip',
+            'dijit/popup',
+            'dojo/on'
         ],
         function(
             declare,
             array,
             Color,
             MultiWiggleBase,
-            Util
+            Util,
+            Tooltip,
+            popup,
+            on
         ) {
 
 var dojof = Util.dojof;
@@ -77,30 +83,43 @@ return declare( MultiWiggleBase, {
         });
     },
     makeTrackLabel: function() {
+        var canvasHeight = this.config.style.height;
+        var kheight = canvasHeight / (dojof.keys(this.map).length);
+
         this.inherited(arguments);
-        console.log('new track label');
         if(this.config.showLabels) {
             this.sublabels = array.map( dojof.keys(this.map), function(key, i) {
-                return dojo.create(
+                var elt = dojo.create(
                     'div', {
                         className: "track-sublabel",
-                        id: "sublabel_" + key,
+                        id: key,
                         style: {
-                            position: 'absolute'
+                            position: 'absolute',
+                            height: kheight+'px'
                         },
-                        innerHTML: key
+                        innerHTML: ""
                     }, this.div);
+                elt.tooltip = new Tooltip({
+                    connectId: key,
+                    label: key,
+                    showDelay: 10
+                });
+
+                return elt;
             }, this);
+            
         }
     },
     updateStaticElements: function( /**Object*/ coords ) {
         this.inherited(arguments);
         var height = this.config.style.height;
         if( this.sublabels && 'x' in coords ) {
-            array.forEach(this.sublabels, function(sublabel, i) {
+            var len = this.sublabels.length;
+            array.forEach( this.sublabels, function(sublabel, i) {
                 sublabel.style.left = coords.x+'px';
-                sublabel.style.fontSize = (height/this.sublabels.length-5)+'px';
-                sublabel.style.top = i*height/this.sublabels.length+'px';
+                sublabel.style.fontSize = (height/len-5)+'px';
+                sublabel.style.top = i*height/len+'px';
+                sublabel.style.backgroundColor = this.config.urlTemplates[this.map[sublabel.id]].color||null;
             }, this);
         }
     }
