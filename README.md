@@ -12,21 +12,27 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
       {
          "storeClass" : "MultiBigWig/Store/SeqFeature/MultiBigWig",
          "urlTemplates" : [
-            {"url":"bw/C0535ACXX_LJA288_0.bw","name":"C0535ACXX_LJA288_0"},
-            {"url":"bw/C0535ACXX_LJA38_0.bw","name":"C0535ACXX_LJA38_0"},
-            {"url":"bw/C0535ACXX_LJA96_0.bw","name":"C0535ACXX_LJA96_0"},
-            {"url":"bw/D09A8ACXX_LJA201_0.bw","name":"D09A8ACXX_LJA201_0"},
-            {"url":"bw/D09A8ACXX_LJA232a_0.bw","name":"D09A8ACXX_LJA232a_0"},
-            {"url":"bw/D09A8ACXX_LJA233_0.bw","name":"D09A8ACXX_LJA233_0"},
-            {"url":"bw/D09A8ACXX_LJA234b_0.bw","name":"D09A8ACXX_LJA234b_0"},
-            {"url":"bw/D09A8ACXX_LJA236_0.bw","name":"D09A8ACXX_LJA236_0"},
-            {"url":"bw/D09A8ACXX_LJA237_0.bw","name":"D09A8ACXX_LJA237_0"},
-            {"url":"bw/D09A8ACXX_LJA240_0.bw","name":"D09A8ACXX_LJA240_0"},
-            {"url":"bw/D09A8ACXX_LJA241_0.bw","name":"D09A8ACXX_LJA241_0"}
+            {"url":"bw/C0535ACXX_LJA288_0.bw","name":"C0535ACXX_LJA288_0", "color": "red"},
+            {"url":"bw/C0535ACXX_LJA38_0.bw","name":"C0535ACXX_LJA38_0", "color": "red"},
+            {"url":"bw/C0535ACXX_LJA96_0.bw","name":"C0535ACXX_LJA96_0", "color": "red"},
+            {"url":"bw/D09A8ACXX_LJA201_0.bw","name":"D09A8ACXX_LJA201_0", "color": "green"},
+            {"url":"bw/D09A8ACXX_LJA232a_0.bw","name":"D09A8ACXX_LJA232a_0", "color": "green"},
+            {"url":"bw/D09A8ACXX_LJA233_0.bw","name":"D09A8ACXX_LJA233_0", "color": "green"},
+            {"url":"bw/D09A8ACXX_LJA234b_0.bw","name":"D09A8ACXX_LJA234b_0", "color": "green"},
+            {"url":"bw/D09A8ACXX_LJA236_0.bw","name":"D09A8ACXX_LJA236_0", "color": "green"},
+            {"url":"bw/D09A8ACXX_LJA237_0.bw","name":"D09A8ACXX_LJA237_0", "color": "green"},
+            {"url":"bw/D09A8ACXX_LJA240_0.bw","name":"D09A8ACXX_LJA240_0", "color": "green"},
+            {"url":"bw/D09A8ACXX_LJA241_0.bw","name":"D09A8ACXX_LJA241_0", "color": "green"}
          ],
          "label" : "Multibigwig",
          "type" : "MultiBigWig/View/Track/MultiWiggle/MultiDensity"
       }
+
+## Options
+
+* urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels
+* showLabels - Display small subtrack "labels" colored using the urlTemplates' "color" attribute, has tooltip for the subtrack name
+
 
 ## Install
 
