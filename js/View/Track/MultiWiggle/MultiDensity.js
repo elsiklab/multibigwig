@@ -29,7 +29,6 @@ return declare( MultiWiggleBase, {
             {
                 maxExportSpan: 500000,
                 style: {
-                    height: 31,
                     pos_color: '#00f',
                     neg_color: '#f00',
                     bg_color: 'rgba(230,230,230,0.6)',
@@ -87,7 +86,7 @@ return declare( MultiWiggleBase, {
         var kheight = canvasHeight / (dojof.keys(this.map).length);
 
         this.inherited(arguments);
-        if(this.config.showLabels) {
+        if(this.config.showLabels||this.config.showTooltips) {
             this.sublabels = array.map( dojof.keys(this.map), function(key, i) {
                 var elt = dojo.create(
                     'div', {
@@ -95,14 +94,18 @@ return declare( MultiWiggleBase, {
                         id: key,
                         style: {
                             position: 'absolute',
-                            height: kheight+'px'
+                            height: kheight+'px',
+                            width: this.config.showLabels?null:'10px',
+                            font:  this.config.labelFont,
+                            fontSize:  this.config.labelFontSize,
+                            backgroundColor:  this.config.urlTemplates[this.map[key]].color
                         },
-                        innerHTML: ""
+                        innerHTML: this.config.showLabels?key:""
                     }, this.div);
                 elt.tooltip = new Tooltip({
                     connectId: key,
                     label: key,
-                    showDelay: 10
+                    showDelay: 0
                 });
 
                 return elt;
@@ -117,9 +120,7 @@ return declare( MultiWiggleBase, {
             var len = this.sublabels.length;
             array.forEach( this.sublabels, function(sublabel, i) {
                 sublabel.style.left = coords.x+'px';
-                sublabel.style.fontSize = (height/len-5)+'px';
                 sublabel.style.top = i*height/len+'px';
-                sublabel.style.backgroundColor = this.config.urlTemplates[this.map[sublabel.id]].color||null;
             }, this);
         }
     }

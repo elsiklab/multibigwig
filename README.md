@@ -31,7 +31,10 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
 ## Options
 
 * urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels
-* showLabels - Display small subtrack "labels" colored using the urlTemplates' "color" attribute, has tooltip for the subtrack name
+* showTooltips - Display small icons with tooltip hover overs for subtracks
+* showLabels - Display actual labels inside the small icons specified by showTooltips
+* labelFont - Specify subtrack label font CSS e.g. "6px sans-serif"
+* labelFontSize - Specify subtrack label font CSS (size only) e.g. "6px"
 
 
 ## Install
