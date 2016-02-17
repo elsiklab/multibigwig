@@ -24,6 +24,7 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
             {"url":"bw/D09A8ACXX_LJA240_0.bw","name":"D09A8ACXX_LJA240_0", "color": "green"},
             {"url":"bw/D09A8ACXX_LJA241_0.bw","name":"D09A8ACXX_LJA241_0", "color": "green"}
          ],
+         "showTooltips": true,
          "label" : "Multibigwig",
          "type" : "MultiBigWig/View/Track/MultiWiggle/MultiDensity"
       }
@@ -31,10 +32,10 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
 ## Options
 
 * urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels
-* showTooltips - Display small icons with tooltip hover overs for subtracks
-* showLabels - Display actual labels inside the small icons specified by showTooltips
+* showLabels - Display actual labels inside the small icons specified by showTooltips (boolean)
+* showTooltips - Display small tooltips over the labels. If specified without showLabels, the label is blank and little squares can be hovered over (boolean)
 * labelFont - Specify subtrack label font CSS e.g. "6px sans-serif"
-* labelFontSize - Specify subtrack label font CSS (size only) e.g. "6px"
+* labelFontSize - Specify subtrack label font size CSS e.g. "6px"
 
 
 ## Install
