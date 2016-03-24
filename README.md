@@ -40,7 +40,7 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
 
 ## Install
 
-- Clone repo into plugins folder in JBrowse
+- Clone repo into plugins folder in JBrowse and name folder MultiBigWig
 - Add "plugins": ["MultiBigWig"] to trackList.json or jbrowse_conf.json
 
 
