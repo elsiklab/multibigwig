@@ -39,7 +39,7 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
     },
 
     
-    getFeatures: function( query, featureCallback, endCallback, errorCallback ) {
+    _getFeatures: function( query, featureCallback, endCallback, errorCallback ) {
         var thisB = this;
         var finished = 0;
         var finishCallback = function() {
@@ -52,8 +52,6 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
                 featureCallback, finishCallback, errorCallback
             );
         });
-
-
     },
 
     saveStore: function() {
