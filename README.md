@@ -29,6 +29,24 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
          "type" : "MultiBigWig/View/Track/MultiWiggle/MultiDensity"
       }
 
+
+Example tracks.conf
+
+
+    [tracks.multibigwig]
+    key=RNA-seq BigWig
+    type=MultiBigWig/View/Track/MultiWiggle/MultiDensity
+    style.height=300
+    showTooltips=true
+    storeClass=MultiBigWig/Store/SeqFeature/MultiBigWig
+    urlTemplates+=json:{"url":"bw/C0535ACXX_LJA143_0.bw", "name": "C0535ACXX_LJA143_0", "color": "red"}
+    urlTemplates+=json:{"url":"bw/C0535ACXX_LJA156_0.bw", "name": "C0535ACXX_LJA156_0", "color": "red"}
+    urlTemplates+=json:{"url":"bw/C0535ACXX_LJA157_0.bw", "name": "C0535ACXX_LJA157_0", "color": "red"}
+    urlTemplates+=json:{"url":"bw/C0535ACXX_LJA158_0.bw", "name": "C0535ACXX_LJA158_0", "color": "red"}
+    urlTemplates+=json:{"url":"bw/C0535ACXX_LJA162_0.bw", "name": "C0535ACXX_LJA162_0", "color": "red"}
+    urlTemplates+=json:{"url":"bw/C0535ACXX_LJA163_0.bw", "name": "C0535ACXX_LJA163_0", "color": "red"}
+
+
 ## Options
 
 * urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels
@@ -36,6 +54,7 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
 * showTooltips - Display small tooltips over the labels. If specified without showLabels, the label is blank and little squares can be hovered over (boolean)
 * labelFont - Specify subtrack label font CSS e.g. "6px sans-serif"
 * labelFontSize - Specify subtrack label font size CSS e.g. "6px"
+* style->height - Total height of the track
 
 
 ## Install
