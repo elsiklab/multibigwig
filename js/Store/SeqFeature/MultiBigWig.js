@@ -54,6 +54,40 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
         });
     },
 
+
+    _getGlobalStats: function( successCallback, errorCallback ) {
+        var thisB = this;
+        var finished = 0;
+        var stats = { scoreMin: 100000000, scoreMax: -10000000 };
+
+        var finishCallback = function(t) {
+            if(t.scoreMin < stats.scoreMin) stats.scoreMin = t.scoreMin;
+            if(t.scoreMax > stats.scoreMax) stats.scoreMax = t.scoreMax;
+            if(thisB.stores.length == ++finished) {
+                successCallback( stats );
+            }
+        };
+        array.forEach( this.stores, function(store) {
+            store._getGlobalStats( finishCallback, errorCallback );
+        });
+    },
+    getRegionStats: function( query, successCallback, errorCallback ) {
+        var thisB = this;
+        var finished = 0;
+        var stats = { scoreMin: 100000000, scoreMax: -10000000 };
+
+        var finishCallback = function(t) {
+            if(t.scoreMin < stats.scoreMin) stats.scoreMin = t.scoreMin;
+            if(t.scoreMax > stats.scoreMax) stats.scoreMax = t.scoreMax;
+            if(thisB.stores.length == ++finished) {
+                successCallback( stats );
+            }
+        };
+        array.forEach( this.stores, function(store) {
+            store.getRegionStats( query, finishCallback, errorCallback );
+        });
+    },
+
     saveStore: function() {
         return {
             urlTemplates: this.config.urlTemplates

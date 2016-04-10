@@ -28,6 +28,7 @@ return declare( MultiWiggleBase, {
             dojo.clone( this.inherited(arguments) ),
             {
                 maxExportSpan: 500000,
+                autoscale: 'local',
                 style: {
                     pos_color: '#00f',
                     neg_color: '#f00',
