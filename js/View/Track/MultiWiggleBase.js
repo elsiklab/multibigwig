@@ -2,13 +2,17 @@ define( [
             'dojo/_base/declare',
             'dojo/_base/array',
             'dojo/_base/lang',
-            'JBrowse/View/Track/WiggleBase'
+            'JBrowse/View/Track/WiggleBase',
+            'MultiBigWig/View/Dialog/MaxScoreDialog',
+            'dijit/CheckedMenuItem'
         ],
         function(
             declare,
             array,
             lang,
-            WiggleBase
+            WiggleBase,
+            MaxScoreDialog,
+            MenuItem
         ) {
 
 return declare( WiggleBase, {
@@ -40,6 +44,40 @@ return declare( WiggleBase, {
         }, this);
 
         return pixelValues;
+    },
+    _trackMenuOptions: function() {
+        var options = this.inherited(arguments);
+        var track = this;
+        options.push({
+            label: "Autoscale global",
+            onClick: function (event) {
+                track.config.autoscale = "global";
+                track.browser.publish('/jbrowse/v1/v/tracks/replace', [track.config]);
+            }
+        });
+        options.push({
+            label: "Autoscale local",
+            onClick: function (event) {
+                track.config.autoscale = "local";
+                track.browser.publish('/jbrowse/v1/v/tracks/replace', [track.config]);
+            }
+        });
+        options.push({
+            label: "Set max score for global",
+            onClick: function() {
+                new MaxScoreDialog({
+                    setCallback: function( filterInt ) {
+                        track.config.max_score = filterInt;
+                        track.config.autoscale = 'global';
+                        track.browser.publish('/jbrowse/v1/c/tracks/replace', [track.config]);
+                    },
+                    maxScore: track.config.max_score||0
+                }).show();
+            }
+        });
+
+
+        return options;
     }
 
 });

@@ -99,39 +99,28 @@ return declare( [WiggleBase, YScaleMixin],
                     if( score <= originY ) {
                         // bar goes upward
                     
-                        context.fillStyle = this.getConfForFeature('style.pos_color',f);
-                        thisB._fillRectMod( context, i, score, 1, 1);
+                       // this.getConfForFeature('style.pos_color',f);
+                        //thisB._fillRectMod( context, i, score, 1, 1);
+                        context.beginPath();
+                        context.strokeStyle = this.config.urlTemplates[this.map[source]].color;
                         var x = (map[source]||{}).x || i;
                         var y = (map[source]||{}).y || score;
-                        if(i==x+1||i==x) {
-                            context.beginPath();
+                        if(i==x+1) {
                             context.moveTo(x, y);
                             context.lineTo(i,score);
-                            context.stroke();
+                        }
+                        else if(i==x&&i!=0) {
+                            context.moveTo(x-1, canvasHeight);
+                            context.lineTo(x,score);
                         }
                         else {
-                            context.beginPath();
                             context.moveTo(x,y);
                             context.lineTo(x+1,canvasHeight);
                             context.lineTo(i-1,canvasHeight);
                             context.lineTo(i,score);
-                            context.stroke();
                         }
+                        context.stroke();
                         map[source] = {x: i, y: score};
-                        if( !disableClipMarkers && score < 0 ) { // draw clip marker if necessary
-                            context.fillStyle = this.getConfForFeature('style.clip_marker_color',f) || this.getConfForFeature('style.neg_color',f);
-                            thisB._fillRectMod( context, i, 0, 1, 3 );
-                        }
-                    }
-                    else {
-                        // bar goes downward
-                        context.fillStyle = this.getConfForFeature('style.neg_color',f);
-                        thisB._fillRectMod( context, i, originY, 1, 1 );
-                        if( !disableClipMarkers && score >= canvasHeight ) { // draw clip marker if necessary
-                            context.fillStyle = this.getConfForFeature('style.clip_marker_color',f) || this.getConfForFeature('style.pos_color',f);
-                            thisB._fillRectMod( context, i, canvasHeight-3, 1, 3 );
-
-                        }
                     }
                 }
             }, this );
