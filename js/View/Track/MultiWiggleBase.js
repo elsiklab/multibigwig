@@ -59,6 +59,7 @@ return declare( WiggleBase, {
             label: "Autoscale local",
             onClick: function (event) {
                 track.config.autoscale = "local";
+                track.config.max_score = null;
                 track.browser.publish('/jbrowse/v1/v/tracks/replace', [track.config]);
             }
         });
