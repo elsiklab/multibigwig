@@ -5,10 +5,7 @@ that accepts multiple bigwig URLs and a custom tracktype for rendering the subtr
 
 
 ![](img/out.png)
-Figure with MultiDensity
-
-![](img/out2.png)
-Figure with MultiXYPlot
+Figure with MultiDensity and MultiXYPlot with different group colorings
 
 
 ## Example configs
