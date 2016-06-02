@@ -96,35 +96,46 @@ return declare( [WiggleBase, YScaleMixin],
                 var f = s['feat'];
                 var source = f.get('source');
                 if( score <= canvasHeight || score > originY) { // if the rectangle is visible at all
+                    var nonCont = this.config.urlTemplates[this.map[source]].nonCont;
                     if( score <= originY ) {
                         // bar goes upward
-                    
-                       // this.getConfForFeature('style.pos_color',f);
-                        //thisB._fillRectMod( context, i, score, 1, 1);
-                        context.beginPath();
-                        context.strokeStyle = this.config.urlTemplates[this.map[source]].color;
-                        var x = (map[source]||{}).x || i;
-                        var y = (map[source]||{}).y || score;
-                        if(i==x+1) {
-                            context.moveTo(x, y);
-                            context.lineTo(i,score);
-                        }
-                        else if(i==x&&i!=0) {
-                            context.moveTo(x-1, canvasHeight);
-                            context.lineTo(x,score);
+                        if(nonCont) {
+                          context.fillStyle = this.config.urlTemplates[this.map[source]].color;
+                          thisB._fillRectMod( context, i, score, 1, 1);
                         }
                         else {
-                            context.moveTo(x,y);
-                            context.lineTo(x+1,canvasHeight);
-                            context.lineTo(i-1,canvasHeight);
-                            context.lineTo(i,score);
+                          context.strokeStyle = this.config.urlTemplates[this.map[source]].color;
+                          context.beginPath();
+                          var x = (map[source]||{}).x || i;
+                          var y = (map[source]||{}).y || score;
+                          if(i==x+1) {
+                              context.moveTo(x, y);
+                              context.lineTo(i,score);
+                          }
+                          else if(i==x&&i!=0) {
+                              context.moveTo(x-1, canvasHeight);
+                              context.lineTo(x,score);
+                          }
+                          else {
+                              context.moveTo(x,y);
+                              context.lineTo(x+1,canvasHeight);
+                              context.lineTo(i-1,canvasHeight);
+                              context.lineTo(i,score);
+                          }
+                          context.stroke();
+                          map[source] = {x: i, y: score};
                         }
-                        context.stroke();
-                        map[source] = {x: i, y: score};
+                    }
+                    else {
+                      //negative values
+                      if(nonCont) {
+                        context.fillStyle = this.config.urlTemplates[this.map[source]].color;
+                        thisB._fillRectMod( context, i, score-1, 1,  1);
+                      }
                     }
                 }
             }, this );
-            
+
         }, this );
     }
 });
