@@ -55,7 +55,7 @@ Example for tracks.conf (MultiXYPlot as example)
 
 General options
 
-* urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels.
+* urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels. It can also specify "nonCont": true to enable discontinuous lines
 * style->height - Total height of the track
 * autoscale - Can be global or local. Global is the max of all bigwig tracks globally. Local is same thing but local, so scrolling around with autoscale local takes time for large number of bigwigs. Note: track types can adjust autoscale type via the track menu
 * max_score - The max score to use. If autoscale global is used, max_score overrides. Note, track types can adjust max score via the track menu
