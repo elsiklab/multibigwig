@@ -1,0 +1,7 @@
+{
+    "preset": "crockford",
+    "requireMultipleVarDecl": null,
+    "requireVarDeclFirst": null,
+    "requireSpaceBeforeObjectValues": null,
+    "disallowDanglingUnderscores": null
+}

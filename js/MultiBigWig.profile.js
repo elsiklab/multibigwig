@@ -23,9 +23,9 @@ var profile = {
     layers: {
         'MultiBigWig/main': {
             include: [
-                'MultiBigWig',
+                'MultiBigWig'
             ],
-            exclude: [ 'JBrowse' ]
+            exclude: ['JBrowse']
         }
     },
 
@@ -56,7 +56,7 @@ var profile = {
 
         // Files that should not be copied when the “mini” compiler flag is set to true.
         miniExclude: function (filename, mid) {
-            return ! ( /^MultiBigWig/.test(mid) );
+            return !(/^MultiBigWig/.test(mid));
         }
     }
 };
