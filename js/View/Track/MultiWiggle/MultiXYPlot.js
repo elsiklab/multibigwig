@@ -104,7 +104,11 @@ return declare([WiggleBase, YScaleMixin],
                         // bar goes upward
                         if (nonCont) {
                             context.fillStyle = this.config.urlTemplates[this.map[source]].color;
-                            thisB._fillRectMod(context, i, score, 1, 1);
+                            var height = 1
+                            if(this.config.urlTemplates[this.map[source]].fill == true) {
+                                height = originY-score+1;
+                            }
+                            thisB._fillRectMod( context, i, score, 1, height);
                         } else {
                             context.strokeStyle = this.config.urlTemplates[this.map[source]].color;
                             context.beginPath();
@@ -129,7 +133,14 @@ return declare([WiggleBase, YScaleMixin],
                         //negative values
                         if (nonCont) {
                             context.fillStyle = this.config.urlTemplates[this.map[source]].color;
-                            thisB._fillRectMod(context, i, score - 1, 1,  1);
+
+                            var top = score-1;
+                            var height = 1;
+                            if(this.config.urlTemplates[this.map[source]].fill == true) {
+                                top = originY;
+                                height = score-originY;
+                            }
+                            thisB._fillRectMod( context, i, top, 1,  height);
                         }
                     }
                 }
