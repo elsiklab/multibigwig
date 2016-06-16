@@ -1,78 +1,73 @@
 define([
-           'dojo/_base/declare',
-           'dojo/dom-construct',
-           'dojo/on',
-           'dijit/focus',
-           'dijit/form/NumberSpinner',
-           'dijit/form/Button',
-           'JBrowse/View/Dialog/WithActionBar',
-           'JBrowse/Model/Location'
-       ],
-       function (
-            declare,
-            dom,
-            on,
-            focus,
-            NumberSpinner,
-            Button,
-            ActionBarDialog,
-            Location
-        ) {
+    'dojo/_base/declare',
+    'dojo/dom-construct',
+    'dojo/on',
+    'dijit/focus',
+    'dijit/form/NumberSpinner',
+    'dijit/form/Button',
+    'JBrowse/View/Dialog/WithActionBar'
+],
+function(
+    declare,
+    dom,
+    on,
+    focus,
+    NumberSpinner,
+    Button,
+    ActionBarDialog
+) {
+    return declare(ActionBarDialog, {
+        title: 'Set max score',
 
+        constructor: function(args) {
+            this.maxScore = args.maxScore || 0;
+            this.browser         = args.browser;
+            this.setCallback     = args.setCallback || function() {};
+            this.cancelCallback  = args.cancelCallback || function() {};
+        },
 
-return declare(ActionBarDialog, {
+        _fillActionBar: function(actionBar) {
+            new Button({
+                label: 'OK',
+                onClick: dojo.hitch(this, function() {
+                    var height = +this.maxScoreSpinner.getValue();
+                    if (isNaN(height)) {
+                        return;
+                    }
+                    this.setCallback && this.setCallback(height);
+                    this.hide();
+                })
+            }).placeAt(actionBar);
 
-    title: 'Set max score',
+            new Button({
+                label: 'Cancel',
+                onClick: dojo.hitch(this, function() {
+                    this.cancelCallback && this.cancelCallback();
+                    this.hide();
+                })
+            }).placeAt(actionBar);
+        },
 
-    constructor: function (args) {
-        this.maxScore = args.maxScore || 0;
-        this.browser         = args.browser;
-        this.setCallback     = args.setCallback || function () {};
-        this.cancelCallback  = args.cancelCallback || function () {};
-    },
+        show: function(/* callback */) {
+            dojo.addClass(this.domNode, 'maxScoreDialog');
 
-    _fillActionBar: function (actionBar) {
-        var ok_button = new Button({
-            label: "OK",
-            onClick: dojo.hitch(this, function () {
-                var height = parseInt(this.maxScoreSpinner.getValue());
-                if (isNaN(height)) {
-                    return;
-                }
-                this.setCallback && this.setCallback(height);
-                this.hide();
-            })
-        }).placeAt(actionBar);
+            this.maxScoreSpinner = new NumberSpinner({
+                value: this.maxScore,
+                smallDelta: 2
+            });
 
-        var cancel_button = new Button({
-            label: "Cancel",
-            onClick: dojo.hitch(this, function () {
-                this.cancelCallback && this.cancelCallback();
-                this.hide();
-            })
-        }).placeAt(actionBar);
-    },
+            this.set('content', [
+                dom.create('label', { 'for': 'read_depth', innerHTML: '' }),
+                this.maxScoreSpinner.domNode,
+                dom.create('span', { innerHTML: ' max score' })
+            ]);
 
-    show: function (callback) {
-        dojo.addClass(this.domNode, 'maxScoreDialog');
+            this.inherited(arguments);
+        },
 
-        this.maxScoreSpinner = new NumberSpinner({
-            value: this.maxScore,
-            smallDelta: 2
-        });
-
-        this.set('content', [
-                     dom.create('label', { "for": 'read_depth', innerHTML: '' }),
-                     this.maxScoreSpinner.domNode,
-                     dom.create('span', { innerHTML: ' max score' })
-                 ]);
-
-        this.inherited(arguments);
-    },
-
-    hide: function () {
-        this.inherited(arguments);
-        window.setTimeout(dojo.hitch(this, 'destroyRecursive'), 500);
-    }
-});
+        hide: function() {
+            this.inherited(arguments);
+            window.setTimeout(dojo.hitch(this, 'destroyRecursive'), 500);
+        }
+    });
 });
