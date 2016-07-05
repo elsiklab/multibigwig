@@ -31,7 +31,7 @@ function(
                 thisB._deferred.features.resolve({success: true});
                 thisB._deferred.stats.resolve({success: true});
             },
-lang.hitch(this, '_failAllDeferred'));
+            lang.hitch(this, '_failAllDeferred'));
         },
 
         _getFeatures: function(query, featureCallback, endCallback, errorCallback) {
@@ -44,8 +44,8 @@ lang.hitch(this, '_failAllDeferred'));
             };
             array.forEach(this.stores, function(store) {
                 store._getFeatures(query,
-    featureCallback, finishCallback, errorCallback
-);
+                    featureCallback, finishCallback, errorCallback
+                );
             });
         },
 

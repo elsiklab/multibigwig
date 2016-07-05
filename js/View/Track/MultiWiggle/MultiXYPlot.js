@@ -104,6 +104,7 @@ function(
                                 context.beginPath();
                                 var x = (map[source] || {}).x || i;
                                 var y = (map[source] || {}).y || score;
+                                console.log(i,x,y,i === x + 1,i === x && i !== 0)
                                 if (i === x + 1) {
                                     context.moveTo(x, y);
                                     context.lineTo(i, score);
@@ -122,16 +123,41 @@ function(
                                     y: score
                                 };
                             }
-                        } else if (nonCont) {
-                            context.fillStyle = this.config.urlTemplates[this.map[source]].color;
+                        } else {
+                            if (nonCont) {
+                                context.fillStyle = this.config.urlTemplates[this.map[source]].color;
 
-                            var top = score - 1;
-                            var heightm = 1;
-                            if (this.config.urlTemplates[this.map[source]].fill) {
-                                top = originY;
-                                heightm = score - originY;
+                                var top = score - 1;
+                                var heightm = 1;
+                                if (this.config.urlTemplates[this.map[source]].fill) {
+                                    top = originY;
+                                    heightm = score - originY;
+                                }
+                                thisB._fillRectMod(context, i, top, 1,  heightm);
                             }
-                            thisB._fillRectMod(context, i, top, 1,  heightm);
+                            else {
+                                context.strokeStyle = this.config.urlTemplates[this.map[source]].color;
+                                context.beginPath();
+                                var x = (map[source] || {}).x || i;
+                                var y = (map[source] || {}).y || score;
+                                if (i === x + 1) {
+                                    context.moveTo(x, y);
+                                    context.lineTo(i, score);
+                                } else if (i === x && i !== 0) {
+                                    context.moveTo(x - 1, canvasHeight);
+                                    context.lineTo(x, score);
+                                } else {
+                                    context.moveTo(x, y);
+                                    context.lineTo(x + 1, canvasHeight);
+                                    context.lineTo(i - 1, canvasHeight);
+                                    context.lineTo(i, score);
+                                }
+                                context.stroke();
+                                map[source] = {
+                                    x: i,
+                                    y: score
+                                };
+                            }
                         }
                     }
                 }, this);
