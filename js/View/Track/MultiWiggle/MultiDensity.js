@@ -24,7 +24,8 @@ function(
                     pos_color: '#00f',
                     neg_color: '#f00',
                     bg_color: 'rgba(230,230,230,0.6)',
-                    clip_marker_color: 'black'
+                    clip_marker_color: 'black',
+                    height: 100
                 }
             });
         },
@@ -74,6 +75,7 @@ function(
         makeTrackLabel: function() {
             var canvasHeight = this.config.style.height;
             var kheight = canvasHeight / (Object.keys(this.map).length);
+            var thisB = this;
 
             this.inherited(arguments);
             if (this.config.showLabels || this.config.showTooltips) {
@@ -84,7 +86,7 @@ function(
                         style: {
                             position: 'absolute',
                             height: kheight + 'px',
-                            width: this.config.showLabels ? null : '10px',
+                            width: this.config.showLabels ? (this.config.labelWidth?this.config.labelWidth+'px':null) : '10px',
                             font: this.config.labelFont,
                             fontSize: this.config.labelFontSize,
                             backgroundColor: this.config.urlTemplates[this.map[key]].color

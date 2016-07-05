@@ -104,7 +104,6 @@ function(
                                 context.beginPath();
                                 var x = (map[source] || {}).x || i;
                                 var y = (map[source] || {}).y || score;
-                                console.log(i,x,y,i === x + 1,i === x && i !== 0)
                                 if (i === x + 1) {
                                     context.moveTo(x, y);
                                     context.lineTo(i, score);
