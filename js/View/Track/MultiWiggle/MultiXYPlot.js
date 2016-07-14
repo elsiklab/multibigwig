@@ -88,19 +88,20 @@ function(
                     var score = toY(s.score);
                     var f = s.feat;
                     var source = f.get('source');
+                    var color = this.config.randomizeColors ? '#'+~~(Math.random()*(1<<24)).toString(16) : this.config.urlTemplates[this.map[source]].color;
                     if (score <= canvasHeight || score > originY) { // if the rectangle is visible at all
                         var nonCont = this.config.urlTemplates[this.map[source]].nonCont;
                         if (score <= originY) {
                             // bar goes upward
                             if (nonCont) {
-                                context.fillStyle = this.config.urlTemplates[this.map[source]].color;
+                                context.strokeStyle = color;
                                 var height = 1;
                                 if (this.config.urlTemplates[this.map[source]].fill) {
                                     height = originY - score + 1;
                                 }
                                 thisB._fillRectMod(context, i, score, 1, height);
                             } else {
-                                context.strokeStyle = this.config.urlTemplates[this.map[source]].color;
+                                context.strokeStyle = color;
                                 context.beginPath();
                                 var x = (map[source] || {}).x || i;
                                 var y = (map[source] || {}).y || score;
@@ -124,7 +125,7 @@ function(
                             }
                         } else {
                             if (nonCont) {
-                                context.fillStyle = this.config.urlTemplates[this.map[source]].color;
+                                context.fillStyle = color;
 
                                 var top = score - 1;
                                 var heightm = 1;
@@ -133,9 +134,8 @@ function(
                                     heightm = score - originY;
                                 }
                                 thisB._fillRectMod(context, i, top, 1,  heightm);
-                            }
-                            else {
-                                context.strokeStyle = this.config.urlTemplates[this.map[source]].color;
+                            } else {
+                                context.strokeStyle = color;
                                 context.beginPath();
                                 var x = (map[source] || {}).x || i;
                                 var y = (map[source] || {}).y || score;
