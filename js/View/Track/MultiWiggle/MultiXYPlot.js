@@ -88,15 +88,15 @@ function(
                     var score = toY(s.score);
                     var f = s.feat;
                     var source = f.get('source');
-                    var color = this.config.urlTemplates[this.map[source]].color;
+                    var color = this.config.urlTemplates[this.nameMap[source]].color;
                     if (score <= canvasHeight || score > originY) { // if the rectangle is visible at all
-                        var nonCont = this.config.urlTemplates[this.map[source]].nonCont;
+                        var nonCont = this.config.urlTemplates[this.nameMap[source]].nonCont;
                         if (score <= originY) {
                             // bar goes upward
                             if (nonCont) {
                                 context.strokeStyle = color;
                                 var height = 1;
-                                if (this.config.urlTemplates[this.map[source]].fill) {
+                                if (this.config.urlTemplates[this.nameMap[source]].fill) {
                                     height = originY - score + 1;
                                 }
                                 thisB._fillRectMod(context, i, score, 1, height);
@@ -129,7 +129,7 @@ function(
 
                                 var top = score - 1;
                                 var heightm = 1;
-                                if (this.config.urlTemplates[this.map[source]].fill) {
+                                if (this.config.urlTemplates[this.nameMap[source]].fill) {
                                     top = originY;
                                     heightm = score - originY;
                                 }

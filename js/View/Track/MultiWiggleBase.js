@@ -15,9 +15,11 @@ function(
     return declare(WiggleBase, {
 
         constructor: function(args) {
-            this.map = {};
+            this.nameMap = {};
+            this.colorMap = {};
+
             array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
-                this.map[urlTemplate.name] = i;
+                this.nameMap[urlTemplate.name] = i;
             }, this);
 
             if(args.config.randomizeColors) {
@@ -25,16 +27,9 @@ function(
                     urlTemplate.color = '#' + ("000000" + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
                 }, this);
             }
-            if(!args.config.metadata) {
-                args.config.metadata={};
-            }
             array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
-                args.config.metadata[urlTemplate.name] = '<div class="squarecolor" style="background: '+urlTemplate.color+'"></div>'+urlTemplate.name;
-            });
-
-            console.log(args.config);
-
-            
+                this.colorMap[urlTemplate.name] = urlTemplate.color;
+            }, this);
         },
         _calculatePixelScores: function(canvasWidth, features, featureRects) {
             var pixelValues = new Array(canvasWidth);
@@ -43,8 +38,8 @@ function(
                 var fRect = featureRects[i];
                 var jEnd = fRect.r;
                 var score = f.get('score');
-                var k = thisB.map[f.get('source')];
-                var ks = Object.keys(thisB.map).length;
+                var k = thisB.nameMap[f.get('source')];
+                var ks = Object.keys(thisB.nameMap).length;
                 for (var j = Math.round(fRect.l); j < jEnd; j++) {
                     if (!pixelValues[j]) {
                         pixelValues[j] = new Array(ks);
@@ -90,6 +85,16 @@ function(
             });
 
             return options;
+        },
+        _trackDetailsContent: function() {
+            if(this.config.colorizeAbout) {
+                var ret = '';
+                array.forEach(Object.keys(this.colorMap), function(elt) {
+                    ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: '+this.colorMap[elt]+'"></div>'+elt;
+                }, this);
+                return ret;
+            }
+            else return this.inherited(arguments);
         }
     });
 });

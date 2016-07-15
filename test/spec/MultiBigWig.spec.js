@@ -57,7 +57,6 @@ function(
         });
 
         it('get bigwig values', function() {
-            console.log(features);
             var f = array.filter(features, function(f) { return f.get('score')>0&&f.get('source')=="microarray_positive"; })
             var g = array.filter(features, function(f) { return f.get('score')<0&&f.get('source')=="microarray_negative"; })
             expect(f.length).toEqual(22);

@@ -57,7 +57,7 @@ function(
                 })();
 
             var resolution = Util.getResolution(context, this.browser.config.highResolutionMode);
-            var kheight = canvasHeight / (Object.keys(this.map).length * resolution);
+            var kheight = canvasHeight / (Object.keys(this.nameMap).length * resolution);
 
             array.forEach(pixels, function(p, i) {
                 if (p) {
@@ -74,11 +74,11 @@ function(
         },
         makeTrackLabel: function() {
             var canvasHeight = this.config.style.height;
-            var kheight = canvasHeight / (Object.keys(this.map).length);
+            var kheight = canvasHeight / (Object.keys(this.nameMap).length);
 
             this.inherited(arguments);
             if (this.config.showLabels || this.config.showTooltips) {
-                this.sublabels = array.map(Object.keys(this.map), function(key) {
+                this.sublabels = array.map(Object.keys(this.nameMap), function(key) {
                     var elt = dojo.create('div', {
                         className: 'track-sublabel',
                         id: key,
@@ -88,7 +88,7 @@ function(
                             width: this.config.showLabels ? (this.config.labelWidth ? this.config.labelWidth + 'px' : null) : '10px',
                             font: this.config.labelFont,
                             fontSize: this.config.labelFontSize,
-                            backgroundColor: this.config.urlTemplates[this.map[key]].color
+                            backgroundColor: this.config.urlTemplates[this.nameMap[key]].color
                         },
                         innerHTML: this.config.showLabels ? key : ''
                     }, this.div);
