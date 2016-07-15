@@ -1,0 +1,26 @@
+{
+  "name": "multibigwig",
+  "homepage": "https://github.com/cmdcolin/multibigwig",
+  "authors": [
+    "Colin <colin.diesh@gmail.com>"
+  ],
+  "description": "A JBrowse plugin for plotting multiple bigwig subtracks",
+  "main": "js/main.js",
+  "keywords": [
+    "bioinformatics",
+    "jbrowse"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jasmine-core": "jasmine#^2.4.1",
+    "jbrowse": "git://github.com/GMOD/jbrowse.git#master"
+  }
+}
