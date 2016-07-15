@@ -19,6 +19,12 @@ function(
             array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
                 this.map[urlTemplate.name] = i;
             }, this);
+
+            if(args.config.randomizeColors) {
+                array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
+                    urlTemplate.color = '#' + ("000000" + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
+                }, this);
+            }
         },
         _calculatePixelScores: function(canvasWidth, features, featureRects) {
             var pixelValues = new Array(canvasWidth);

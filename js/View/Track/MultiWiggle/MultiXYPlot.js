@@ -88,7 +88,7 @@ function(
                     var score = toY(s.score);
                     var f = s.feat;
                     var source = f.get('source');
-                    var color = this.config.randomizeColors ? '#'+~~(Math.random()*(1<<24)).toString(16) : this.config.urlTemplates[this.map[source]].color;
+                    var color = this.config.urlTemplates[this.map[source]].color;
                     if (score <= canvasHeight || score > originY) { // if the rectangle is visible at all
                         var nonCont = this.config.urlTemplates[this.map[source]].nonCont;
                         if (score <= originY) {
