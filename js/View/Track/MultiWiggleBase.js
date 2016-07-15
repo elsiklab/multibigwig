@@ -25,6 +25,16 @@ function(
                     urlTemplate.color = '#' + ("000000" + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
                 }, this);
             }
+            if(!args.config.metadata) {
+                args.config.metadata={};
+            }
+            array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
+                args.config.metadata[urlTemplate.name] = '<div class="squarecolor" style="background: '+urlTemplate.color+'"></div>'+urlTemplate.name;
+            });
+
+            console.log(args.config);
+
+            
         },
         _calculatePixelScores: function(canvasWidth, features, featureRects) {
             var pixelValues = new Array(canvasWidth);

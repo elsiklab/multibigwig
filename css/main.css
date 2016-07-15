@@ -13,3 +13,11 @@ div.track-sublabel {
     color: #111;
     font-weight: bold;
 }
+
+.squarecolor {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
