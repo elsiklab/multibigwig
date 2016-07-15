@@ -59,6 +59,7 @@ General options
 * style->height - Total height of the track
 * autoscale - Can be global or local. Global is the max of all bigwig tracks globally. Local is same thing but local, so scrolling around with autoscale local takes time for large number of bigwigs. Note: track types can adjust autoscale type via the track menu
 * max_score - The max score to use. If autoscale global is used, max_score overrides. Note, track types can adjust max score via the track menu
+* randomizeColors - randomize the colors to be used on each subtrack. Boolean, default false
 
 
 MultiDensity specific options
