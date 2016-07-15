@@ -1,3 +1,11 @@
+# Version 0.3.0
+
+- Add randomizeColors option
+- Add basic travis-ci testing
+- Allow specifying "nonCont" attribute on urlTemplates to use "dotted" instead of continuous lines. Thanks to @keiranmraine for contributing
+- Fix plotting negative values from BigWigs in continuous mode. Thanks again to @keiranmraine for reporting
+- Add ability to specify labelWidth to keep a consistent width on subtrack labels. Thanks to @carrere for reporting
+
 # Version 0.2.0
 
 - Calculate global and local stats so that autoscale global/local work

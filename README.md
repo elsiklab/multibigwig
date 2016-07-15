@@ -1,5 +1,7 @@
 # multibigwig
 
+[![](https://travis-ci.org/cmdcolin/multibigwig.svg?branch=master)](https://travis-ci.org/cmdcolin/sashimiplot)
+
 A JBrowse plugin for plotting multiple bigwig files on a single track. Includes a storeclass
 that accepts multiple bigwig URLs and a custom tracktype for rendering the subtracks.
 
@@ -68,6 +70,7 @@ MultiDensity specific options
 * showTooltips - Display small tooltips over the labels. If specified without showLabels, the label is blank and little squares can be hovered over (boolean)
 * labelFont - Specify subtrack label font CSS e.g. "6px sans-serif"
 * labelFontSize - Specify subtrack label font size CSS e.g. "6px"
+* labelWidth - Specify a specific width for all subtrack labels
 
 
 ## Install
