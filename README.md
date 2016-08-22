@@ -1,6 +1,6 @@
 # multibigwig
 
-[![](https://travis-ci.org/cmdcolin/multibigwig.svg?branch=master)](https://travis-ci.org/cmdcolin/multibigwig)
+[![](https://travis-ci.org/elsiklab/multibigwig.svg?branch=master)](https://travis-ci.org/elsiklab/multibigwig)
 
 A JBrowse plugin for plotting multiple bigwig files on a single track. Includes a storeclass
 that accepts multiple bigwig URLs and a custom tracktype for rendering the subtracks.
