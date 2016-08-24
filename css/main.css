@@ -1,17 +1,19 @@
 
 div.track-sublabel {
     z-index: 10;
-    padding: 1px 6px;
     overflow: hidden;
     cursor: pointer;
 
-    border-width: 1px;
-    border-style: solid;
-    border-color: #999;
+    border-left: 1px solid #999;
+    border-right: 1px solid #999;
+    border-top: 1px solid #999;
 
 
     color: #111;
     font-weight: bold;
+}
+div.track-sublabel.last {
+    border-bottom: 1px solid #999;
 }
 
 .colorsquare {
