@@ -94,7 +94,7 @@ function(
                         if (score <= originY) {
                             // bar goes upward
                             if (nonCont) {
-                                context.strokeStyle = color;
+                                context.fillStyle = color;
                                 var height = 1;
                                 if (this.config.urlTemplates[this.nameMap[source]].fill) {
                                     height = originY - score + 1;

@@ -22,12 +22,12 @@ function(
                 this.nameMap[urlTemplate.name] = i;
             }, this);
 
-            if(args.config.randomizeColors) {
-                array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
-                    urlTemplate.color = '#' + ("000000" + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
+            if (args.config.randomizeColors) {
+                array.forEach(args.config.urlTemplates, function(urlTemplate) {
+                    urlTemplate.color = '#' + ('000000' + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
                 }, this);
             }
-            array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
+            array.forEach(args.config.urlTemplates, function(urlTemplate) {
                 this.colorMap[urlTemplate.name] = urlTemplate.color;
             }, this);
         },
@@ -87,14 +87,15 @@ function(
             return options;
         },
         _trackDetailsContent: function() {
-            if(this.config.colorizeAbout) {
-                var ret = '';
+            var ret = '';
+            if (this.config.colorizeAbout) {
                 array.forEach(Object.keys(this.colorMap), function(elt) {
-                    ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: '+this.colorMap[elt]+'"></div>'+elt;
+                    ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' + this.colorMap[elt] + '"></div>' + elt;
                 }, this);
-                return ret;
+            } else {
+                ret = this.inherited(arguments);
             }
-            else return this.inherited(arguments);
+            return ret;
         }
     });
 });
