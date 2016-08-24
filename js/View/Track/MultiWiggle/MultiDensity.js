@@ -75,7 +75,6 @@ function(
         makeTrackLabel: function() {
             var canvasHeight = this.config.style.height;
             var kheight = canvasHeight / (Object.keys(this.nameMap).length);
-            console.log(kheight);
 
             this.inherited(arguments);
             if (this.config.showLabels || this.config.showTooltips) {
@@ -85,7 +84,7 @@ function(
                         id: key,
                         style: {
                             position: 'absolute',
-                            height: (kheight-1) + 'px',
+                            height: (kheight - 1) + 'px',
                             width: this.config.showLabels ? (this.config.labelWidth ? this.config.labelWidth + 'px' : null) : '10px',
                             font: this.config.labelFont,
                             fontSize: this.config.labelFontSize,
@@ -105,15 +104,14 @@ function(
         },
         updateStaticElements: function(/** Object*/ coords) {
             this.inherited(arguments);
-            var height = this.config.style.height-2;
+            var height = this.config.style.height - 2;
             if (this.sublabels && 'x' in coords) {
                 var len = this.sublabels.length;
                 array.forEach(this.sublabels, function(sublabel, i) {
                     sublabel.style.left = coords.x + 'px';
                     sublabel.style.top = i * height / len + 'px';
-                    if(i==len-1) {
+                    if (i == len - 1) {
                         dojo.addClass(sublabel, 'last');
-                        console.log(sublabel)
                     }
                 }, this);
             }
