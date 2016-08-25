@@ -55,22 +55,35 @@ Example for tracks.conf (MultiXYPlot as example)
 
 ## Options
 
-General options
 
-* urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels. It can also specify "nonCont": true to enable discontinuous lines
+### Main configuration
+
+* urlTemplates - An array of subtracks, containing the url for a BW file, name, and optionally color for subtrack labels. Each one can have the following properties: name, description, color, nonCont, and url.
+
+Example
+
+    "urlTemplates": [
+        { "name": "sample1", "description": "liver", "color": "red", "nonCont": true, "url": "sample1.bw" }
+    ]
+
+### Attributes inherited from Wiggle tracks
+
 * style->height - Total height of the track
 * autoscale - Can be global or local. Global is the max of all bigwig tracks globally. Local is same thing but local, so scrolling around with autoscale local takes time for large number of bigwigs. Note: track types can adjust autoscale type via the track menu
 * max_score - The max score to use. If autoscale global is used, max_score overrides. Note, track types can adjust max score via the track menu
-* randomizeColors - randomize the colors to be used on each subtrack. Boolean, default false
 
 
-MultiDensity specific options
+### MultiDensity specific options
 
-* showLabels - Display actual labels inside the small icons specified by showTooltips (boolean)
-* showTooltips - Display small tooltips over the labels. If specified without showLabels, the label is blank and little squares can be hovered over (boolean)
-* labelFont - Specify subtrack label font and size in CSS e.g. "6px sans-serif"
-* labelWidth - Specify a specific width for all subtrack labels
+* showLabels - Display subtrack labels (boolean)
+* showTooltips - Display mouseover tooltips with subtrack name and description (boolean)
+* labelFont - Specify subtrack label font CSS e.g. "6px sans-serif"
+* labelWidth - Specify a specific width for all subtrack labels. Default autosizes to each sublabel's length, which can look ugly
 
+### Other options
+
+* randomizeColors - Randomize the colors to be used on each subtrack to help distinguish MultiXYPlot lines
+* colorizeAbout - Add subtrack colors to the 'About this track' menu
 
 ## Install
 
