@@ -87,7 +87,6 @@ function(
                             height: (kheight - 1) + 'px',
                             width: thisB.config.showLabels ? (thisB.config.labelWidth ? thisB.config.labelWidth + 'px' : null) : '10px',
                             font: thisB.config.labelFont,
-                            fontSize: thisB.config.labelFontSize,
                             backgroundColor: elt.color
                         },
                         innerHTML: thisB.config.showLabels ? elt.name : ''

@@ -68,8 +68,7 @@ MultiDensity specific options
 
 * showLabels - Display actual labels inside the small icons specified by showTooltips (boolean)
 * showTooltips - Display small tooltips over the labels. If specified without showLabels, the label is blank and little squares can be hovered over (boolean)
-* labelFont - Specify subtrack label font CSS e.g. "6px sans-serif"
-* labelFontSize - Specify subtrack label font size CSS e.g. "6px"
+* labelFont - Specify subtrack label font and size in CSS e.g. "6px sans-serif"
 * labelWidth - Specify a specific width for all subtrack labels
 
 
