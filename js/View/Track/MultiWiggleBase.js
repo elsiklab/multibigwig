@@ -15,34 +15,22 @@ function(
     return declare(WiggleBase, {
 
         constructor: function(args) {
-            this.nameMap = {};
-            this.colorMap = {};
-
-            array.forEach(args.config.urlTemplates, function(urlTemplate, i) {
-                this.nameMap[urlTemplate.name] = i;
-            }, this);
-
-            if (args.config.randomizeColors) {
-                array.forEach(args.config.urlTemplates, function(urlTemplate) {
-                    urlTemplate.color = '#' + ('000000' + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
-                }, this);
-            }
-            array.forEach(args.config.urlTemplates, function(urlTemplate) {
-                this.colorMap[urlTemplate.name] = urlTemplate.color;
-            }, this);
+            this.labels = args.config.urlTemplates;
         },
         _calculatePixelScores: function(canvasWidth, features, featureRects) {
             var pixelValues = new Array(canvasWidth);
-            var thisB = this;
             array.forEach(features, function(f, i) {
                 var fRect = featureRects[i];
                 var jEnd = fRect.r;
                 var score = f.get('score');
-                var k = thisB.nameMap[f.get('source')];
-                var ks = Object.keys(thisB.nameMap).length;
+                for (var k = 0; k < this.labels.length; k++) {
+                    if (this.labels[k].name === f.get('source')) {
+                        break;
+                    }
+                }
                 for (var j = Math.round(fRect.l); j < jEnd; j++) {
                     if (!pixelValues[j]) {
-                        pixelValues[j] = new Array(ks);
+                        pixelValues[j] = new Array(this.labels.length);
                     }
                     if (!pixelValues[j][k]) {
                         pixelValues[j][k] = { score: score, feat: f };
@@ -89,8 +77,8 @@ function(
         _trackDetailsContent: function() {
             var ret = '';
             if (this.config.colorizeAbout) {
-                array.forEach(Object.keys(this.colorMap), function(elt) {
-                    ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' + this.colorMap[elt] + '"></div>' + elt;
+                array.forEach(this.labels, function(elt) {
+                    ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' + elt.color + '"></div>' + elt.name;
                 }, this);
             } else {
                 ret = this.inherited(arguments);

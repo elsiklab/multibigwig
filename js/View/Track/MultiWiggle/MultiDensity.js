@@ -57,7 +57,7 @@ function(
                 })();
 
             var resolution = Util.getResolution(context, this.browser.config.highResolutionMode);
-            var kheight = canvasHeight / (Object.keys(this.nameMap).length * resolution);
+            var kheight = canvasHeight / (this.labels.length * resolution);
 
             array.forEach(pixels, function(p, i) {
                 if (p) {
@@ -74,32 +74,32 @@ function(
         },
         makeTrackLabel: function() {
             var canvasHeight = this.config.style.height;
-            var kheight = canvasHeight / (Object.keys(this.nameMap).length);
-
+            var kheight = canvasHeight / (this.labels.length);
+            var thisB = this;
             this.inherited(arguments);
             if (this.config.showLabels || this.config.showTooltips) {
-                this.sublabels = array.map(Object.keys(this.nameMap), function(key) {
-                    var elt = dojo.create('div', {
+                this.sublabels = array.map(this.labels, function(elt) {
+                    var htmlnode = dojo.create('div', {
                         className: 'track-sublabel',
-                        id: key,
+                        id: elt.name,
                         style: {
                             position: 'absolute',
                             height: (kheight - 1) + 'px',
-                            width: this.config.showLabels ? (this.config.labelWidth ? this.config.labelWidth + 'px' : null) : '10px',
-                            font: this.config.labelFont,
-                            fontSize: this.config.labelFontSize,
-                            backgroundColor: this.config.urlTemplates[this.nameMap[key]].color
+                            width: thisB.config.showLabels ? (thisB.config.labelWidth ? thisB.config.labelWidth + 'px' : null) : '10px',
+                            font: thisB.config.labelFont,
+                            fontSize: thisB.config.labelFontSize,
+                            backgroundColor: elt.color
                         },
-                        innerHTML: this.config.showLabels ? key : ''
-                    }, this.div);
-                    elt.tooltip = new Tooltip({
-                        connectId: key,
-                        label: key,
+                        innerHTML: thisB.config.showLabels ? elt.name : ''
+                    }, thisB.div);
+                    htmlnode.tooltip = new Tooltip({
+                        connectId: elt.name,
+                        label: elt.name + '<br />' + (elt.description || ''),
                         showDelay: 0
                     });
 
-                    return elt;
-                }, this);
+                    return htmlnode;
+                });
             }
         },
         updateStaticElements: function(/** Object*/ coords) {
