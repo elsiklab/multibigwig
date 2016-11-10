@@ -80,7 +80,7 @@ function(
             var originY = toY(dataScale.origin);
             var initMap = {};
             array.forEach(pixels[0], function(s) {
-                if(!s) {
+                if (!s) {
                     return;
                 }
                 var f = s.feat;
@@ -98,7 +98,7 @@ function(
 
                     var f = s.feat;
                     var source = f.get('source');
-                    var elt = this.labels.find(function(l) { return l.name == f.get('source'); });
+                    var elt = this.labels.find(function(l) { return l.name === f.get('source'); });
                     var color = elt.color;
                     var nonCont = elt.nonCont;
                     if (score <= canvasHeight || score > originY) { // if the rectangle is visible at all
@@ -119,25 +119,23 @@ function(
                                 context.stroke();
                                 initMap[source] = score;
                             }
-                        } else {
-                            if (nonCont) {
-                                context.fillStyle = color;
+                        } else if (nonCont) {
+                            context.fillStyle = color;
 
-                                var top = score - 1;
-                                var heightm = 1;
-                                if (elt.fill) {
-                                    top = originY;
-                                    heightm = score - originY;
-                                }
-                                thisB._fillRectMod(context, i, top, 1,  heightm);
-                            } else {
-                                context.strokeStyle = color;
-                                context.beginPath();
-                                context.moveTo(i, initMap[source]);
-                                context.lineTo(i + 1, score);
-                                context.stroke();
-                                initMap[source] = score;
+                            var top = score - 1;
+                            var heightm = 1;
+                            if (elt.fill) {
+                                top = originY;
+                                heightm = score - originY;
                             }
+                            thisB._fillRectMod(context, i, top, 1,  heightm);
+                        } else {
+                            context.strokeStyle = color;
+                            context.beginPath();
+                            context.moveTo(i, initMap[source]);
+                            context.lineTo(i + 1, score);
+                            context.stroke();
+                            initMap[source] = score;
                         }
                     }
                 }, this);

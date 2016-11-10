@@ -109,7 +109,7 @@ function(
                 array.forEach(this.sublabels, function(sublabel, i) {
                     sublabel.style.left = coords.x + 'px';
                     sublabel.style.top = i * height / len + 'px';
-                    if (i == len - 1) {
+                    if (i === len - 1) {
                         dojo.addClass(sublabel, 'last');
                     }
                 }, this);
