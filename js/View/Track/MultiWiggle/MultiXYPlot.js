@@ -89,7 +89,7 @@ function(
                 initMap[source] = score;
             });
 
-            array.forEach(pixels.slice(1), function(p, i) {
+            array.forEach(pixels, function(p, i) {
                 array.forEach(p, function(s) {
                     if (!s) {
                         return;
