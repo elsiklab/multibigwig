@@ -78,23 +78,27 @@ function(
                 return canvasHeight * (1 - dataScale.normalize(val)) / ratio;
             });
             var originY = toY(dataScale.origin);
-            var map = {};
+            var initMap = {};
+            array.forEach(pixels[0], function(s) {
+                if(!s) {
+                    return;
+                }
+                var f = s.feat;
+                var source = f.get('source');
+                var score = toY(s.score);
+                initMap[source] = score;
+            });
 
-            array.forEach(pixels, function(p, i) {
+            array.forEach(pixels.slice(1), function(p, i) {
                 array.forEach(p, function(s) {
                     if (!s) {
                         return;
                     }
                     var score = toY(s.score);
+
                     var f = s.feat;
                     var source = f.get('source');
-                    var elt = {};
-                    for (var k = 0; k < this.labels.length; k++) {
-                        if (this.labels[k].name == f.get('source')) {
-                            elt = this.labels[k];
-                            break;
-                        }
-                    }
+                    var elt = this.labels.find(function(l) { return l.name == f.get('source'); });
                     var color = elt.color;
                     var nonCont = elt.nonCont;
                     if (score <= canvasHeight || score > originY) { // if the rectangle is visible at all
@@ -110,25 +114,10 @@ function(
                             } else {
                                 context.strokeStyle = color;
                                 context.beginPath();
-                                var x = (map[source] || {}).x || i;
-                                var y = (map[source] || {}).y || score;
-                                if (i === x + 1) {
-                                    context.moveTo(x, y);
-                                    context.lineTo(i, score);
-                                } else if (i === x && i !== 0) {
-                                    context.moveTo(x - 1, canvasHeight);
-                                    context.lineTo(x, score);
-                                } else {
-                                    context.moveTo(x, y);
-                                    context.lineTo(x + 1, canvasHeight);
-                                    context.lineTo(i - 1, canvasHeight);
-                                    context.lineTo(i, score);
-                                }
+                                context.moveTo(i, initMap[source]);
+                                context.lineTo(i + 1, score);
                                 context.stroke();
-                                map[source] = {
-                                    x: i,
-                                    y: score
-                                };
+                                initMap[source] = score;
                             }
                         } else {
                             if (nonCont) {
@@ -144,30 +133,20 @@ function(
                             } else {
                                 context.strokeStyle = color;
                                 context.beginPath();
-                                var x = (map[source] || {}).x || i;
-                                var y = (map[source] || {}).y || score;
-                                if (i === x + 1) {
-                                    context.moveTo(x, y);
-                                    context.lineTo(i, score);
-                                } else if (i === x && i !== 0) {
-                                    context.moveTo(x - 1, canvasHeight);
-                                    context.lineTo(x, score);
-                                } else {
-                                    context.moveTo(x, y);
-                                    context.lineTo(x + 1, canvasHeight);
-                                    context.lineTo(i - 1, canvasHeight);
-                                    context.lineTo(i, score);
-                                }
+                                context.moveTo(i, initMap[source]);
+                                context.lineTo(i + 1, score);
                                 context.stroke();
-                                map[source] = {
-                                    x: i,
-                                    y: score
-                                };
+                                initMap[source] = score;
                             }
                         }
                     }
                 }, this);
             }, this);
+        },
+        _getBlockFeatures: function(args) {
+            args.leftBase -= 1;
+            args.rightBase += 1;
+            return this.inherited(arguments, [args]);
         }
     });
 });
