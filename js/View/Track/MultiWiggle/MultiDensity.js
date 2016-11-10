@@ -2,17 +2,22 @@ define([
     'dojo/_base/declare',
     'dojo/_base/array',
     'dojo/_base/Color',
+    'dojo/on',
     'MultiBigWig/View/Track/MultiWiggleBase',
     'JBrowse/Util',
-    'dijit/Tooltip'
+    'dijit/TooltipDialog',
+    'dijit/popup'
 ],
 function(
     declare,
     array,
     Color,
+    on,
     MultiWiggleBase,
     Util,
-    Tooltip
+    TooltipDialog,
+    popup
+
 ) {
     return declare(MultiWiggleBase, {
 
@@ -76,12 +81,13 @@ function(
             var canvasHeight = this.config.style.height;
             var kheight = canvasHeight / (this.labels.length);
             var thisB = this;
+            var c = this.config;
             this.inherited(arguments);
             if (this.config.showLabels || this.config.showTooltips) {
-                this.sublabels = array.map(this.labels, function(elt) {
+                this.sublabels = array.map(this.labels, function(elt, i) {
                     var htmlnode = dojo.create('div', {
                         className: 'track-sublabel',
-                        id: elt.name,
+                        id: thisB.config.label + '_' + elt.name,
                         style: {
                             position: 'absolute',
                             height: (kheight - 1) + 'px',
@@ -91,11 +97,25 @@ function(
                         },
                         innerHTML: thisB.config.showLabels ? elt.name : ''
                     }, thisB.div);
-                    htmlnode.tooltip = new Tooltip({
-                        connectId: elt.name,
-                        label: elt.name + '<br />' + (elt.description || ''),
-                        showDelay: 0
+                    
+
+                    var tooltip = new TooltipDialog({
+                        id: thisB.config.label + '_tooltip_' + i,
+                        content: elt.name + '<br />' + (elt.description || ''),
+                        onMouseLeave: function() {
+                            popup.close(tooltip);
+                        }
                     });
+
+                    on(htmlnode, c.clickTooltips ? 'click' : 'mouseover', function() {
+                        popup.open({
+                            popup: tooltip,
+                            around: htmlnode,
+                            orient: ['after']
+                        });
+                    });
+                    
+
 
                     return htmlnode;
                 });

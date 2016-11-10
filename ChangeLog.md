@@ -1,3 +1,9 @@
+# Version 0.4.0
+
+- Fix missing randomizeColors option
+- Add clickTooltips option for click instead of mouseover tooltips
+- Make lines more continuous around block boundaries
+
 # Version 0.3.0
 
 - Add randomizeColors option

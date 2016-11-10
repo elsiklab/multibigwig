@@ -76,7 +76,8 @@ Example
 ### MultiDensity specific options
 
 * showLabels - Display subtrack labels (boolean)
-* showTooltips - Display mouseover tooltips with subtrack name and description (boolean)
+* showTooltips - Display tooltips with subtrack name and description (boolean)
+* clickTooltips - Only display tooltip if clicked instead of mouseovered
 * labelFont - Specify subtrack label font CSS e.g. "6px sans-serif"
 * labelWidth - Specify a specific width for all subtrack labels. Default autosizes to each sublabel's length, which can look ugly
 
