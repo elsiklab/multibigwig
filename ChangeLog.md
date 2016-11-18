@@ -1,3 +1,8 @@
+# Version 0.5.0
+
+- Remove TooltipDialog class
+- Add example of tooltips without labels
+
 # Version 0.4.0
 
 - Fix missing randomizeColors option
