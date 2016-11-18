@@ -5,8 +5,7 @@ define([
     'dojo/on',
     'MultiBigWig/View/Track/MultiWiggleBase',
     'JBrowse/Util',
-    'dijit/Tooltip',
-    'dijit/popup'
+    'dijit/Tooltip'
 ],
 function (
     declare,
@@ -15,9 +14,7 @@ function (
     on,
     MultiWiggleBase,
     Util,
-    TooltipDialog,
-    popup
-
+    Tooltip
 ) {
     return declare(MultiWiggleBase, {
 
@@ -98,23 +95,12 @@ function (
                         innerHTML: thisB.config.showLabels ? elt.name : ''
                     }, thisB.div);
 
-
-                    var tooltip = new TooltipDialog({
-                        id: thisB.config.label + '_tooltip_' + i,
-                        content: elt.name + '<br />' + (elt.description || ''),
-                        onMouseLeave: function () {
-                            popup.close(tooltip);
-                        }
-                    });
-
                     on(htmlnode, c.clickTooltips ? 'click' : 'mouseover', function () {
-                        popup.open({
-                            popup: tooltip,
-                            around: htmlnode,
-                            orient: ['after']
-                        });
+                        Tooltip.show(elt.name + '<br />' + (elt.description || ''), htmlnode);
                     });
-
+                    on.once(htmlnode, 'mouseleave', function () {
+                        Tooltip.hide(htmlnode);
+                    });
 
                     return htmlnode;
                 });
