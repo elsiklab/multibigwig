@@ -9,7 +9,7 @@ define([
     'JBrowse/Util',
     'JBrowse/View/Track/Wiggle/_Scale'
 ],
-function(
+function (
     declare,
     array,
     lang,
@@ -21,7 +21,7 @@ function(
     Scale
 ) {
     return declare([WiggleBase, YScaleMixin], {
-        _defaultConfig: function() {
+        _defaultConfig: function () {
             return Util.deepUpdate(lang.clone(this.inherited(arguments)), {
                 autoscale: 'local',
                 style: {
@@ -33,8 +33,8 @@ function(
             });
         },
 
-        _getScaling: function(viewArgs, successCallback, errorCallback) {
-            this._getScalingStats(viewArgs, dojo.hitch(this, function(stats) {
+        _getScaling: function (viewArgs, successCallback, errorCallback) {
+            this._getScalingStats(viewArgs, dojo.hitch(this, function (stats) {
                 if (!this.lastScaling || !this.lastScaling.sameStats(stats) || this.trackHeightChanged) {
                     var scaling = new Scale(this.config, stats);
 
@@ -63,23 +63,23 @@ function(
             }), errorCallback);
         },
 
-        updateStaticElements: function(coords) {
+        updateStaticElements: function (coords) {
             this.inherited(arguments);
             this.updateYScaleFromViewDimensions(coords);
         },
 
-        _drawFeatures: function(scale, leftBase, rightBase, block, canvas, pixels, dataScale) {
+        _drawFeatures: function (scale, leftBase, rightBase, block, canvas, pixels, dataScale) {
             var thisB = this;
             var context = canvas.getContext('2d');
             var canvasHeight = canvas.height;
 
             var ratio = Util.getResolution(context, this.browser.config.highResolutionMode);
-            var toY = lang.hitch(this, function(val) {
+            var toY = lang.hitch(this, function (val) {
                 return canvasHeight * (1 - dataScale.normalize(val)) / ratio;
             });
             var originY = toY(dataScale.origin);
             var initMap = {};
-            array.forEach(pixels[0], function(s) {
+            array.forEach(pixels[0], function (s) {
                 if (!s) {
                     return;
                 }
@@ -89,8 +89,8 @@ function(
                 initMap[source] = score;
             });
 
-            array.forEach(pixels, function(p, i) {
-                array.forEach(p, function(s) {
+            array.forEach(pixels, function (p, i) {
+                array.forEach(p, function (s) {
                     if (!s) {
                         return;
                     }
@@ -98,7 +98,7 @@ function(
 
                     var f = s.feat;
                     var source = f.get('source');
-                    var elt = this.labels.find(function(l) { return l.name === f.get('source'); });
+                    var elt = this.labels.find(function (l) { return l.name === f.get('source'); });
                     var color = elt.color;
                     var nonCont = elt.nonCont;
                     if (score <= canvasHeight || score > originY) { // if the rectangle is visible at all
@@ -141,7 +141,7 @@ function(
                 }, this);
             }, this);
         },
-        _getBlockFeatures: function(args) {
+        _getBlockFeatures: function (args) {
             args.leftBase -= 1;
             args.rightBase += 1;
             return this.inherited(arguments, [args]);

@@ -5,7 +5,7 @@ define([
     'JBrowse/View/Track/WiggleBase',
     'MultiBigWig/View/Dialog/MaxScoreDialog'
 ],
-function(
+function (
     declare,
     array,
     lang,
@@ -14,17 +14,17 @@ function(
 ) {
     return declare(WiggleBase, {
 
-        constructor: function(args) {
+        constructor: function (args) {
             this.labels = args.config.urlTemplates;
             if (args.config.randomizeColors) {
-                array.forEach(this.labels, function(label) {
+                array.forEach(this.labels, function (label) {
                     label.color = '#' + ('000000' + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
                 }, this);
             }
         },
-        _calculatePixelScores: function(canvasWidth, features, featureRects) {
+        _calculatePixelScores: function (canvasWidth, features, featureRects) {
             var pixelValues = new Array(canvasWidth);
-            array.forEach(features, function(f, i) {
+            array.forEach(features, function (f, i) {
                 var fRect = featureRects[i];
                 var jEnd = fRect.r;
                 var score = f.get('score');
@@ -45,19 +45,19 @@ function(
 
             return pixelValues;
         },
-        _trackMenuOptions: function() {
+        _trackMenuOptions: function () {
             var options = this.inherited(arguments);
             var track = this;
             options.push({
                 label: 'Autoscale global',
-                onClick: function() {
+                onClick: function () {
                     track.config.autoscale = 'global';
                     track.browser.publish('/jbrowse/v1/v/tracks/replace', [track.config]);
                 }
             });
             options.push({
                 label: 'Autoscale local',
-                onClick: function() {
+                onClick: function () {
                     track.config.autoscale = 'local';
                     track.config.max_score = null;
                     track.browser.publish('/jbrowse/v1/v/tracks/replace', [track.config]);
@@ -65,9 +65,9 @@ function(
             });
             options.push({
                 label: 'Set max score for global',
-                onClick: function() {
+                onClick: function () {
                     new MaxScoreDialog({
-                        setCallback: function(filterInt) {
+                        setCallback: function (filterInt) {
                             track.config.max_score = filterInt;
                             track.config.autoscale = 'global';
                             track.browser.publish('/jbrowse/v1/c/tracks/replace', [track.config]);
@@ -79,10 +79,10 @@ function(
 
             return options;
         },
-        _trackDetailsContent: function() {
+        _trackDetailsContent: function () {
             var ret = '';
             if (this.config.colorizeAbout) {
-                array.forEach(this.labels, function(elt) {
+                array.forEach(this.labels, function (elt) {
                     ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' + elt.color + '"></div>' + elt.name;
                 }, this);
             } else {

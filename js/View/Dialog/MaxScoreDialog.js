@@ -7,7 +7,7 @@ define([
     'dijit/form/Button',
     'JBrowse/View/Dialog/WithActionBar'
 ],
-function(
+function (
     declare,
     dom,
     on,
@@ -19,17 +19,17 @@ function(
     return declare(ActionBarDialog, {
         title: 'Set max score',
 
-        constructor: function(args) {
+        constructor: function (args) {
             this.maxScore = args.maxScore || 0;
             this.browser         = args.browser;
-            this.setCallback     = args.setCallback || function() {};
-            this.cancelCallback  = args.cancelCallback || function() {};
+            this.setCallback     = args.setCallback || function () {};
+            this.cancelCallback  = args.cancelCallback || function () {};
         },
 
-        _fillActionBar: function(actionBar) {
+        _fillActionBar: function (actionBar) {
             new Button({
                 label: 'OK',
-                onClick: dojo.hitch(this, function() {
+                onClick: dojo.hitch(this, function () {
                     var height = +this.maxScoreSpinner.getValue();
                     if (isNaN(height)) {
                         return;
@@ -41,14 +41,14 @@ function(
 
             new Button({
                 label: 'Cancel',
-                onClick: dojo.hitch(this, function() {
+                onClick: dojo.hitch(this, function () {
                     this.cancelCallback && this.cancelCallback();
                     this.hide();
                 })
             }).placeAt(actionBar);
         },
 
-        show: function(/* callback */) {
+        show: function (/* callback */) {
             dojo.addClass(this.domNode, 'maxScoreDialog');
 
             this.maxScoreSpinner = new NumberSpinner({
@@ -65,7 +65,7 @@ function(
             this.inherited(arguments);
         },
 
-        hide: function() {
+        hide: function () {
             this.inherited(arguments);
             window.setTimeout(dojo.hitch(this, 'destroyRecursive'), 500);
         }

@@ -5,10 +5,10 @@ define([
     'dojo/on',
     'MultiBigWig/View/Track/MultiWiggleBase',
     'JBrowse/Util',
-    'dijit/TooltipDialog',
+    'dijit/Tooltip',
     'dijit/popup'
 ],
-function(
+function (
     declare,
     array,
     Color,
@@ -21,7 +21,7 @@ function(
 ) {
     return declare(MultiWiggleBase, {
 
-        _defaultConfig: function() {
+        _defaultConfig: function () {
             return Util.deepUpdate(dojo.clone(this.inherited(arguments)), {
                 maxExportSpan: 500000,
                 autoscale: 'local',
@@ -34,16 +34,16 @@ function(
                 }
             });
         },
-        _drawFeatures: function(scale, leftBase, rightBase, block, canvas, pixels, dataScale) {
+        _drawFeatures: function (scale, leftBase, rightBase, block, canvas, pixels, dataScale) {
             var thisB = this;
             var context = canvas.getContext('2d');
             var canvasHeight = canvas.height;
             var featureColor = typeof this.config.style.color === 'function' ? this.config.style.color :
-                (function() { // default color function uses conf variables
+                (function () { // default color function uses conf variables
                     var disableClipMarkers = thisB.config.disable_clip_markers;
                     var normOrigin = dataScale.normalize(dataScale.origin);
 
-                    return function(p, n) {
+                    return function (p, n) {
                         var feature = p.feat;
                         var ret;
                         // not clipped
@@ -64,9 +64,9 @@ function(
             var resolution = Util.getResolution(context, this.browser.config.highResolutionMode);
             var kheight = canvasHeight / (this.labels.length * resolution);
 
-            array.forEach(pixels, function(p, i) {
+            array.forEach(pixels, function (p, i) {
                 if (p) {
-                    array.forEach(p, function(pi, j) {
+                    array.forEach(p, function (pi, j) {
                         if (pi) {
                             var score = pi.score;
                             var n = dataScale.normalize(score);
@@ -77,14 +77,14 @@ function(
                 }
             });
         },
-        makeTrackLabel: function() {
+        makeTrackLabel: function () {
             var canvasHeight = this.config.style.height;
             var kheight = canvasHeight / (this.labels.length);
             var thisB = this;
             var c = this.config;
             this.inherited(arguments);
             if (this.config.showLabels || this.config.showTooltips) {
-                this.sublabels = array.map(this.labels, function(elt, i) {
+                this.sublabels = array.map(this.labels, function (elt, i) {
                     var htmlnode = dojo.create('div', {
                         className: 'track-sublabel',
                         id: thisB.config.label + '_' + elt.name,
@@ -97,36 +97,35 @@ function(
                         },
                         innerHTML: thisB.config.showLabels ? elt.name : ''
                     }, thisB.div);
-                    
+
 
                     var tooltip = new TooltipDialog({
                         id: thisB.config.label + '_tooltip_' + i,
                         content: elt.name + '<br />' + (elt.description || ''),
-                        onMouseLeave: function() {
+                        onMouseLeave: function () {
                             popup.close(tooltip);
                         }
                     });
 
-                    on(htmlnode, c.clickTooltips ? 'click' : 'mouseover', function() {
+                    on(htmlnode, c.clickTooltips ? 'click' : 'mouseover', function () {
                         popup.open({
                             popup: tooltip,
                             around: htmlnode,
                             orient: ['after']
                         });
                     });
-                    
 
 
                     return htmlnode;
                 });
             }
         },
-        updateStaticElements: function(/** Object*/ coords) {
+        updateStaticElements: function (/** Object*/ coords) {
             this.inherited(arguments);
             var height = this.config.style.height - 2;
             if (this.sublabels && 'x' in coords) {
                 var len = this.sublabels.length;
-                array.forEach(this.sublabels, function(sublabel, i) {
+                array.forEach(this.sublabels, function (sublabel, i) {
                     sublabel.style.left = coords.x + 'px';
                     sublabel.style.top = i * height / len + 'px';
                     if (i === len - 1) {
