@@ -1,0 +1,17 @@
+{
+   "tracks" : [
+      {
+         "urlTemplate" : "tracks/RefSeq_proteincoding/{refseq}/trackData.json",
+         "compress" : 0,
+         "style" : {
+            "className" : "feature"
+         },
+         "label" : "RefSeq_proteincoding",
+         "trackType" : "CanvasFeatures",
+         "key" : "RefSeq_proteincoding",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "CanvasFeatures"
+      }
+   ],
+   "formatVersion" : 1
+}
