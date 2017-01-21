@@ -82,7 +82,6 @@ function (
                     stats.scoreMax = t.scoreMax;
                 }
                 if (thisB.stores.length === ++finished) {
-                    console.log(stats);
                     successCallback(stats);
                 }
             };

@@ -99,7 +99,6 @@ function (
                         Tooltip.show(elt.name + '<br />' + (elt.description || ''), htmlnode);
                     });
                     on(htmlnode, 'mouseleave', function () {
-                        console.log('mouseleave')
                         Tooltip.hide(htmlnode);
                     });
 
