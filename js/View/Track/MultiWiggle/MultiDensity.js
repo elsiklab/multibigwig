@@ -98,7 +98,8 @@ function (
                     on(htmlnode, c.clickTooltips ? 'click' : 'mouseover', function () {
                         Tooltip.show(elt.name + '<br />' + (elt.description || ''), htmlnode);
                     });
-                    on.once(htmlnode, 'mouseleave', function () {
+                    on(htmlnode, 'mouseleave', function () {
+                        console.log('mouseleave')
                         Tooltip.hide(htmlnode);
                     });
 
