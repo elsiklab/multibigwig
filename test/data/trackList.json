@@ -15,5 +15,6 @@
          "category" : "Reference sequence"
       }
    ],
-   "formatVersion" : 1
+   "formatVersion" : 1,
+   "highResolutionMode": 2
 }
