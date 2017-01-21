@@ -2,6 +2,7 @@
 
 - Fix global and local autoscaling
 - Fix mouseover tooltip bug from 0.5.0
+- Make colorizeAbout append to about box instead of replace contents
 
 # Version 0.5.0
 

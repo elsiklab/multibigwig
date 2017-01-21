@@ -80,15 +80,17 @@ function (
             return options;
         },
         _trackDetailsContent: function () {
+            var old = this.inherited(arguments);
             var ret = '';
             if (this.config.colorizeAbout) {
                 array.forEach(this.labels, function (elt) {
                     ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' + elt.color + '"></div>' + elt.name;
                 }, this);
-            } else {
-                ret = this.inherited(arguments);
             }
-            return ret;
+            return old.then(function(txt) {
+                txt.innerHTML += ret;
+                return txt;
+            });
         }
     });
 });
