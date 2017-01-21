@@ -1,3 +1,8 @@
+# Version 0.6.0
+
+- Fix global and local autoscaling
+- Fix mouseover tooltip bug from 0.5.0
+
 # Version 0.5.0
 
 - Remove TooltipDialog class

@@ -59,7 +59,7 @@ function (
                 label: 'Autoscale local',
                 onClick: function () {
                     track.config.autoscale = 'local';
-                    track.config.max_score = null;
+                    delete track.config.max_score;
                     track.browser.publish('/jbrowse/v1/v/tracks/replace', [track.config]);
                 }
             });
