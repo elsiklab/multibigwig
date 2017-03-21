@@ -81,14 +81,16 @@ function (
             var c = this.config;
             this.inherited(arguments);
             if (this.config.showLabels || this.config.showTooltips) {
-                this.sublabels = array.map(this.labels, function (elt, i) {
+                this.sublabels = array.map(this.labels, function (elt) {
+                    var lw = thisB.config.labelWidth ? thisB.config.labelWidth + 'px' : null;
+
                     var htmlnode = dojo.create('div', {
                         className: 'track-sublabel',
                         id: thisB.config.label + '_' + elt.name,
                         style: {
                             position: 'absolute',
                             height: (kheight - 1) + 'px',
-                            width: thisB.config.showLabels ? (thisB.config.labelWidth ? thisB.config.labelWidth + 'px' : null) : '10px',
+                            width: thisB.config.showLabels ? lw : '10px',
                             font: thisB.config.labelFont,
                             backgroundColor: elt.color
                         },

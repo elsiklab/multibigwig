@@ -87,7 +87,7 @@ function (
                     ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' + elt.color + '"></div>' + elt.name;
                 }, this);
             }
-            return old.then(function(txt) {
+            return old.then(function (txt) {
                 txt.innerHTML += ret;
                 return txt;
             });
