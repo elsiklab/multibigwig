@@ -16,5 +16,6 @@
       }
    ],
    "formatVersion" : 1,
-   "highResolutionMode": 2
+   "highResolutionMode": 2,
+   "classicMenu": true
 }
