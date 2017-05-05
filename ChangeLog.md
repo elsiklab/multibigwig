@@ -1,3 +1,7 @@
+# Version 0.7.0
+
+- Fix phantomjs and old browsers with polyfill for Array.prototype.find
+
 # Version 0.6.0
 
 - Fix global and local autoscaling
