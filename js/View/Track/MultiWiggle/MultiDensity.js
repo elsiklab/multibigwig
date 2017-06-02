@@ -3,7 +3,7 @@ define([
     'dojo/_base/array',
     'dojo/_base/Color',
     'dojo/on',
-    'MultiBigWig/View/Track/MultiWiggleBase',
+    '../MultiWiggleBase',
     'JBrowse/Util',
     'dijit/Tooltip'
 ],

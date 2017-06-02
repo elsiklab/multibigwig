@@ -4,7 +4,7 @@ define([
     'dojo/_base/lang',
     'dojo/_base/Color',
     'dojo/on',
-    'MultiBigWig/View/Track/MultiWiggleBase',
+    '../MultiWiggleBase',
     'JBrowse/View/Track/_YScaleMixin',
     'JBrowse/Util',
     'JBrowse/View/Track/Wiggle/_Scale'

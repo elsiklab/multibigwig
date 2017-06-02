@@ -3,7 +3,7 @@ define([
     'dojo/_base/array',
     'dojo/_base/lang',
     'JBrowse/View/Track/WiggleBase',
-    'MultiBigWig/View/Dialog/MaxScoreDialog'
+    '../Dialog/MaxScoreDialog'
 ],
 function (
     declare,
