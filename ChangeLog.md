@@ -1,3 +1,7 @@
+# Version 0.8.0
+
+- Fix off-by-one error in the MultiXYPlot. Thanks to @nathanhaigh for the report
+
 # Version 0.7.0
 
 - Fix phantomjs and old browsers with polyfill for Array.prototype.find
