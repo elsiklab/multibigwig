@@ -140,11 +140,6 @@ function (
                     }
                 }, this);
             }, this);
-        },
-        _getBlockFeatures: function (args) {
-            args.leftBase -= 1;
-            args.rightBase += 1;
-            return this.inherited(arguments, [args]);
         }
     });
 });
