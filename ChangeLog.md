@@ -1,3 +1,8 @@
+# Version 0.9.0
+
+- Add normalizing all bigwigs to same scale using global stats on chromosome
+- Add REAPR example that is useful for normalizing all bigwigs in test/reapr
+
 # Version 0.8.0
 
 - Fix off-by-one error in the MultiXYPlot. Thanks to @nathanhaigh for the report

@@ -1,0 +1,16 @@
+{
+  "tracks": [
+    {
+      "storeClass": "JBrowse/Store/Sequence/StaticChunked",
+      "urlTemplate": "seq/{refseq_dirpath}/{refseq}-",
+      "category": "Reference sequence",
+      "seqType": "dna",
+      "key": "Reference sequence",
+      "type": "SequenceTrack",
+      "label": "DNA",
+      "chunkSize": 20000
+    }
+  ],
+  "formatVersion": 1,
+  "plugins": ["MultiBigWig"]
+}
