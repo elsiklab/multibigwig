@@ -49,6 +49,22 @@ function (
             });
         },
 
+        getIndividualStats: function (successCallback, errorCallback) {
+            var thisB = this;
+            var finished = 0;
+            var stats = {};
+
+            array.forEach(this.stores, function (store) {
+                store._getGlobalStats((function(name) {
+                    return function(t) {
+                        stats[name] = t;
+                        if (thisB.stores.length === ++finished) {
+                            successCallback(stats);
+                        }
+                    };
+                })(store.name), errorCallback);
+            });
+        },
         _getGlobalStats: function (successCallback, errorCallback) {
             var thisB = this;
             var finished = 0;

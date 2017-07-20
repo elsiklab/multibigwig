@@ -32,35 +32,44 @@ function (
                 }
             });
         },
-
         _getScaling: function (viewArgs, successCallback, errorCallback) {
-            this._getScalingStats(viewArgs, dojo.hitch(this, function (stats) {
-                if (!this.lastScaling || !this.lastScaling.sameStats(stats) || this.trackHeightChanged) {
-                    var scaling = new Scale(this.config, stats);
+            if(this.config.normalizeEach) {
+                this.store.getIndividualStats(function(stats) {
+                    Object.keys(stats).forEach(function (key) {
+                        stats[key].normalize = function(val) { return (val - stats[key].scoreMin) / (stats[key].scoreMax-stats[key].scoreMin); }
+                    });
+                    stats.compare = function() { return true; }
+                    successCallback(stats);
+                }, errorCallback);
+            } else {
+                this._getScalingStats(viewArgs, dojo.hitch(this, function (stats) {
+                    if (!this.lastScaling || !this.lastScaling.sameStats(stats) || this.trackHeightChanged) {
+                        var scaling = new Scale(this.config, stats);
 
-                    // bump minDisplayed to 0 if it is within 0.5% of it
-                    if (Math.abs(scaling.min / scaling.max) < 0.005) {
-                        scaling.min = 0;
+                        // bump minDisplayed to 0 if it is within 0.5% of it
+                        if (Math.abs(scaling.min / scaling.max) < 0.005) {
+                            scaling.min = 0;
+                        }
+
+                        // update our track y-scale to reflect it
+                        this.makeYScale({
+                            fixBounds: true,
+                            min: scaling.min,
+                            max: scaling.max
+                        });
+
+                        // and finally adjust the scaling to match the ruler's scale rounding
+                        scaling.min = this.ruler.scaler.bounds.lower;
+                        scaling.max = this.ruler.scaler.bounds.upper;
+                        scaling.range = scaling.max - scaling.min;
+
+                        this.lastScaling = scaling;
+                        this.trackHeightChanged = false; // reset flag
                     }
 
-                    // update our track y-scale to reflect it
-                    this.makeYScale({
-                        fixBounds: true,
-                        min: scaling.min,
-                        max: scaling.max
-                    });
-
-                    // and finally adjust the scaling to match the ruler's scale rounding
-                    scaling.min = this.ruler.scaler.bounds.lower;
-                    scaling.max = this.ruler.scaler.bounds.upper;
-                    scaling.range = scaling.max - scaling.min;
-
-                    this.lastScaling = scaling;
-                    this.trackHeightChanged = false; // reset flag
-                }
-
-                successCallback(this.lastScaling);
-            }), errorCallback);
+                    successCallback(this.lastScaling);
+                }), errorCallback);
+            }
         },
 
         updateStaticElements: function (coords) {
@@ -74,10 +83,19 @@ function (
             var canvasHeight = canvas.height;
 
             var ratio = Util.getResolution(context, this.browser.config.highResolutionMode);
-            var toY = lang.hitch(this, function (val) {
-                return canvasHeight * (1 - dataScale.normalize(val)) / ratio;
-            });
-            var originY = toY(dataScale.origin);
+            var toY;
+            var originY;
+            if(this.config.normalizeEach) {
+                toY = lang.hitch(this, function (val, name) {
+                    return canvasHeight * (1 - dataScale[name].normalize(val)) / ratio;
+                });
+                originY = 1;
+            } else {
+                toY = lang.hitch(this, function (val, name) {
+                    return canvasHeight * (1 - dataScale.normalize(val)) / ratio;
+                });
+                originY = toY(dataScale.origin);
+            }
             var initMap = {};
             array.forEach(pixels[0], function (s) {
                 if (!s) {
@@ -85,7 +103,7 @@ function (
                 }
                 var f = s.feat;
                 var source = f.get('source');
-                var score = toY(s.score);
+                var score = toY(s.score, source);
                 initMap[source] = score;
             });
 
@@ -94,10 +112,10 @@ function (
                     if (!s) {
                         return;
                     }
-                    var score = toY(s.score);
 
                     var f = s.feat;
                     var source = f.get('source');
+                    var score = toY(s.score, source);
                     var elt = this.labels.find(function (l) { return l.name === f.get('source'); });
                     var color = elt.color;
                     var nonCont = elt.nonCont;
