@@ -1,3 +1,7 @@
+# Version 0.9.1
+
+- Add border collapse
+
 # Version 0.9.0
 
 - Add normalizing all bigwigs to same scale using global stats on chromosome

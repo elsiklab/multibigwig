@@ -33,12 +33,12 @@ function (
             });
         },
         _getScaling: function (viewArgs, successCallback, errorCallback) {
-            if(this.config.normalizeEach) {
-                this.store.getIndividualStats(function(stats) {
+            if (this.config.normalizeEach) {
+                this.store.getIndividualStats(function (stats) {
                     Object.keys(stats).forEach(function (key) {
-                        stats[key].normalize = function(val) { return (val - stats[key].scoreMin) / (stats[key].scoreMax-stats[key].scoreMin); }
+                        stats[key].normalize = function (val) { return (val - stats[key].scoreMin) / (stats[key].scoreMax - stats[key].scoreMin); };
                     });
-                    stats.compare = function() { return true; }
+                    stats.compare = function () { return true; };
                     successCallback(stats);
                 }, errorCallback);
             } else {
@@ -85,7 +85,7 @@ function (
             var ratio = Util.getResolution(context, this.browser.config.highResolutionMode);
             var toY;
             var originY;
-            if(this.config.normalizeEach) {
+            if (this.config.normalizeEach) {
                 toY = lang.hitch(this, function (val, name) {
                     return canvasHeight * (1 - dataScale[name].normalize(val)) / ratio;
                 });

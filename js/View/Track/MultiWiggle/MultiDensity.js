@@ -52,7 +52,7 @@ function (
                             ).toString();
                         } else {
                             ret = (n > 1 ? thisB.getConfForFeature('style.pos_color', feature)
-                                       : thisB.getConfForFeature('style.neg_color', feature));
+                                : thisB.getConfForFeature('style.neg_color', feature));
                         }
                         return ret;
                     };
@@ -116,9 +116,6 @@ function (
                 array.forEach(this.sublabels, function (sublabel, i) {
                     sublabel.style.left = coords.x + 'px';
                     sublabel.style.top = i * height / len + 'px';
-                    if (i === len - 1) {
-                        dojo.addClass(sublabel, 'last');
-                    }
                 }, this);
             }
         }

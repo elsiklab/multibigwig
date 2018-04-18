@@ -55,8 +55,8 @@ function (
             var stats = {};
 
             array.forEach(this.stores, function (store) {
-                store._getGlobalStats((function(name) {
-                    return function(t) {
+                store._getGlobalStats((function (name) {
+                    return function (t) {
                         stats[name] = t;
                         if (thisB.stores.length === ++finished) {
                             successCallback(stats);
