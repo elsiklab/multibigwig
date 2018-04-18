@@ -1,6 +1,7 @@
 # Version 0.9.1
 
 - Add border collapse
+- Important fix for JBrowse 1.14+ (old versions of MultiBigWig will fail if used on JBrowse 1.14+)
 
 # Version 0.9.0
 

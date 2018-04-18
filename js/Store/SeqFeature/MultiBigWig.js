@@ -43,8 +43,14 @@ function (
                 }
             };
             array.forEach(this.stores, function (store) {
+                var f = (function(name) {
+                    return function(feat) {
+                        feat.data.source = name;
+                        featureCallback(feat);
+                    }
+                })(store.name)
                 store._getFeatures(query,
-                    featureCallback, finishCallback, errorCallback
+                    f, finishCallback, errorCallback
                 );
             });
         },
