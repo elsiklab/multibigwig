@@ -92,4 +92,6 @@ Example
 - Add "plugins": ["MultiBigWig"] to trackList.json or jbrowse_conf.json
 
 
+Please see http://gmod.org/wiki/JBrowse_FAQ#How_do_I_install_a_plugin for more information about installing plugins
+
 Still in beta! Feel free to provide feedback
