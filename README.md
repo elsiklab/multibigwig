@@ -50,7 +50,44 @@ Example for tracks.conf (MultiXYPlot as example)
     urlTemplates+=json:{"url":"bw/C0535ACXX_LJA96_0.bw", "name": "C0535ACXX_LJA96_0.bw", "color": "#339"}
     urlTemplates+=json:{"url":"bw/D09A8ACXX_LJA201_0.bw", "name": "D09A8ACXX_LJA201_0.bw", "color": "#156"}
     urlTemplates+=json:{"url":"bw/D09A8ACXX_LJA235_0.bw", "name": "D09A8ACXX_LJA235_0.bw", "color": "#918"}
-    
+
+
+Simple config using just array of filenames available since version 0.10 of this plugin
+
+    [tracks.multibigwigxy]
+    key=RNA-seq BigWig XY
+    type=MultiBigWig/View/Track/MultiWiggle/MultiXYPlot
+    storeClass=MultiBigWig/Store/SeqFeature/MultiBigWig
+    randomizeColors=true
+    colorizeAbout=true
+    urlTemplates+=bw/C0535ACXX_LJA276_0.bw
+    urlTemplates+=bw/C0535ACXX_LJA288_0.bw
+    urlTemplates+=bw/C0535ACXX_LJA38_0.bw
+    urlTemplates+=bw/C0535ACXX_LJA96_0.bw
+    urlTemplates+=bw/D09A8ACXX_LJA201_0.bw
+    urlTemplates+=bw/D09A8ACXX_LJA235_0.bw
+
+Same thing in trackList.json
+
+      {
+         "storeClass" : "MultiBigWig/Store/SeqFeature/MultiBigWig",
+         "urlTemplates" : [
+            "bw/C0535ACXX_LJA288_0.bw",
+            "bw/C0535ACXX_LJA38_0.bw",
+            "bw/C0535ACXX_LJA96_0.bw",
+            "bw/D09A8ACXX_LJA201_0.bw",
+            "bw/D09A8ACXX_LJA232a_0.bw",
+            "bw/D09A8ACXX_LJA233_0.bw",
+            "bw/D09A8ACXX_LJA234b_0.bw",
+            "bw/D09A8ACXX_LJA236_0.bw",
+            "bw/D09A8ACXX_LJA237_0.bw",
+            "bw/D09A8ACXX_LJA240_0.bw",
+            "bw/D09A8ACXX_LJA241_0.bw"
+         ],
+         "showTooltips": true,
+         "label" : "Multibigwig",
+         "type" : "MultiBigWig/View/Track/MultiWiggle/MultiDensity"
+      }
 
 
 ## Options

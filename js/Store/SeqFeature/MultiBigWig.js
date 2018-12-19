@@ -22,7 +22,11 @@ function (
         constructor: function (args) {
             var thisB = this;
             this.stores = array.map(args.urlTemplates, function (urlTemplate) {
-                return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate.url, name: urlTemplate.name }));
+                if(lang.isObject(urlTemplate)) {
+                    return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate.url, name: urlTemplate.name }));
+                } else {
+                    return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate, name: urlTemplate.substr(urlTemplate.lastIndexOf('/')+1) }));
+                }
             });
 
             all(array.map(this.stores, function (store) {

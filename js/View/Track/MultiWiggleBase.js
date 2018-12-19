@@ -15,7 +15,13 @@ function (
     return declare(WiggleBase, {
 
         constructor: function (args) {
-            this.labels = args.config.urlTemplates;
+            this.labels = args.config.urlTemplates.map(f => {
+                if(lang.isObject(f)) {
+                    return f
+                } else {
+                    return { name: f }
+                }
+            });
             if (args.config.randomizeColors) {
                 array.forEach(this.labels, function (label) {
                     label.color = '#' + ('000000' + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
