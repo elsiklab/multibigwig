@@ -21,13 +21,22 @@ function (
     return declare([SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin], {
         constructor: function (args) {
             var thisB = this;
-            this.stores = array.map(args.urlTemplates, function (urlTemplate) {
+
+            function initStore(urlTemplate) {
                 if(lang.isObject(urlTemplate)) {
                     return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate.url, name: urlTemplate.name }));
                 } else {
                     return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate, name: urlTemplate.substr(urlTemplate.lastIndexOf('/')+1) }));
                 }
-            });
+            }
+            if(args.customScales) {
+                this.customScaleStores = args.customScales.map(m =>
+                    array.map(m.urlTemplates, initStore))
+                })
+                this.stores = this.customScaleStores.reduce((a,b) => a.concat(b), [])
+            } else {
+                this.stores = array.map(args.urlTemplates, initStore)
+            }
 
             all(array.map(this.stores, function (store) {
                 return store._deferred.features;
@@ -39,6 +48,7 @@ function (
         },
 
         _getFeatures: function (query, featureCallback, endCallback, errorCallback) {
+            console.log(query)
             var thisB = this;
             var finished = 0;
             var finishCallback = function () {
@@ -46,17 +56,32 @@ function (
                     endCallback();
                 }
             };
-            array.forEach(this.stores, function (store) {
-                var f = (function(name) {
-                    return function(feat) {
-                        feat.data.source = name;
-                        featureCallback(feat);
-                    }
-                })(store.name)
-                store._getFeatures(query,
-                    f, finishCallback, errorCallback
-                );
-            });
+            if(this.customScaleStores) {
+                array.forEach(this.customScaleStores[Math.floor(query.basesPerSpan/100)], function (store) {
+                    var f = (function(name) {
+                        return function(feat) {
+                            feat.data.source = name;
+                            featureCallback(feat);
+                        }
+                    })(store.name)
+                    store._getFeatures(query,
+                        f, finishCallback, errorCallback
+                    );
+                });
+            }
+            else {
+                array.forEach(this.stores, function (store) {
+                    var f = (function(name) {
+                        return function(feat) {
+                            feat.data.source = name;
+                            featureCallback(feat);
+                        }
+                    })(store.name)
+                    store._getFeatures(query,
+                        f, finishCallback, errorCallback
+                    );
+                });
+            }
         },
 
         getIndividualStats: function (successCallback, errorCallback) {
