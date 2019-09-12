@@ -22,11 +22,13 @@ function (
         constructor: function (args) {
             var thisB = this;
             this.stores = array.map(args.urlTemplates, function (urlTemplate) {
-                if(lang.isObject(urlTemplate)) {
+                if (lang.isObject(urlTemplate)) {
+                    if (urlTemplate.storeClass) {
+                        return new dojo.global.require(urlTemplate.storeClass)(Object.assign(args, urlTemplate, {urlTemplate: urlTemplate.url }));
+                    }
                     return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate.url, name: urlTemplate.name }));
-                } else {
-                    return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate, name: urlTemplate.substr(urlTemplate.lastIndexOf('/')+1) }));
                 }
+                return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate, name: urlTemplate.substr(urlTemplate.lastIndexOf('/') + 1) }));
             });
 
             all(array.map(this.stores, function (store) {
@@ -47,12 +49,12 @@ function (
                 }
             };
             array.forEach(this.stores, function (store) {
-                var f = (function(name) {
-                    return function(feat) {
+                var f = (function (name) {
+                    return function (feat) {
                         feat.data.source = name;
                         featureCallback(feat);
-                    }
-                })(store.name)
+                    };
+                })(store.name);
                 store._getFeatures(query,
                     f, finishCallback, errorCallback
                 );

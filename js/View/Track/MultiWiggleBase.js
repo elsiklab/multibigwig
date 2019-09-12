@@ -16,11 +16,10 @@ function (
 
         constructor: function (args) {
             this.labels = args.config.urlTemplates.map(f => {
-                if(lang.isObject(f)) {
-                    return f
-                } else {
-                    return { name: f }
+                if (lang.isObject(f)) {
+                    return f;
                 }
+                return { name: f };
             });
             if (args.config.randomizeColors) {
                 array.forEach(this.labels, function (label) {
