@@ -23,12 +23,22 @@ function (
             var thisB = this;
             this.stores = array.map(args.urlTemplates, function (urlTemplate) {
                 if (lang.isObject(urlTemplate)) {
+                    const c = Object.assign(args, urlTemplate, {
+                        urlTemplate: urlTemplate.url,
+                        name: urlTemplate.name||urlTemplate.url.substr(urlTemplate.url.lastIndexOf('/') + 1)
+                    })
                     if (urlTemplate.storeClass) {
-                        return new dojo.global.require(urlTemplate.storeClass)(Object.assign(args, urlTemplate, {urlTemplate: urlTemplate.url }));
+                        const CLASS = dojo.global.require(urlTemplate.storeClass)
+                        return new CLASS(Object.assign(c, { config: c }))
+                    } else {
+                        return new BigWig(Object.assign(c, { config: c }))
                     }
-                    return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate.url, name: urlTemplate.name }));
                 }
-                return new BigWig(dojo.mixin(args, { urlTemplate: urlTemplate, name: urlTemplate.substr(urlTemplate.lastIndexOf('/') + 1) }));
+                const c = Object.assign(args, {
+                    urlTemplate: urlTemplate,
+                    name: urlTemplate.substr(urlTemplate.lastIndexOf('/') + 1)
+                })
+                return new BigWig(Object.assign(c, { config: c }))
             });
 
             all(array.map(this.stores, function (store) {
@@ -51,7 +61,7 @@ function (
             array.forEach(this.stores, function (store) {
                 var f = (function (name) {
                     return function (feat) {
-                        feat.data.source = name;
+                        if(!feat.data.source) { feat.data.source = name }
                         featureCallback(feat);
                     };
                 })(store.name);

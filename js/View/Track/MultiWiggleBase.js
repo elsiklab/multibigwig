@@ -17,7 +17,14 @@ function (
         constructor: function (args) {
             this.labels = args.config.urlTemplates.map(f => {
                 if (lang.isObject(f)) {
-                    return f;
+                    if(f.name) {
+                        return f
+                    }
+                    else {
+                        return Object.assign(f, {
+                            name: f.url.substr(f.url.lastIndexOf('/') + 1)
+                        })
+                    }
                 }
                 return { name: f };
             });
@@ -33,8 +40,9 @@ function (
                 var fRect = featureRects[i];
                 var jEnd = fRect.r;
                 var score = f.get('score');
+                var source = f.get('source');
                 for (var k = 0; k < this.labels.length; k++) {
-                    if (this.labels[k].name === f.get('source')) {
+                    if (this.labels[k].name === source) {
                         break;
                     }
                 }
