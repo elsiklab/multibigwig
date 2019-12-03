@@ -113,12 +113,11 @@ function (
             var stats = { scoreMin: 100000000, scoreMax: -10000000 };
 
             var finishCallback = function (t) {
-                if (t.scoreMin < stats.scoreMin) {
-                    stats.scoreMin = t.scoreMin;
+                const newMax = t.scoreMean+3*t.scoreStdDev
+                if (newMax > stats.scoreMax) {
+                    stats.scoreMax = newMax
                 }
-                if (t.scoreMax > stats.scoreMax) {
-                    stats.scoreMax = t.scoreMax;
-                }
+                stats.scoreMin=0;
                 if (thisB.stores.length === ++finished) {
                     successCallback(stats);
                 }
