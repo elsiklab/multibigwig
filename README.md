@@ -103,6 +103,16 @@ Example
         { "name": "sample1", "description": "liver", "color": "red", "nonCont": true, "url": "sample1.bw" }
     ]
 
+The configuration can also specify a storeClass if something other than BigWig is used
+
+    urlTemplates+=json:{"storeClass": "JBrowse/Store/SeqFeature/BedGraphTabix", "url":"volvox_microarray.bg.gz", "name": "volvox_positive", "color": "#235"}
+    urlTemplates+=json:{"storeClass": "JBrowse/Store/SeqFeature/BedGraphTabix", "url":"volvox_microarray_negative.bg.gz", "name": "volvox_negative", "color": "#a54"}
+
+
+
+Note BedGraph is still unimplemented on JBrowse master but will be soon
+
+
 ### Attributes inherited from Wiggle tracks
 
 * style->height - Total height of the track
@@ -122,6 +132,7 @@ Example
 
 * randomizeColors - Randomize the colors to be used on each subtrack to help distinguish MultiXYPlot lines
 * colorizeAbout - Add subtrack colors to the 'About this track' menu
+* useStdDev - an option that uses the 3 standard deviations above the mean as the scoreMax and sets scoreMin to 0
 
 ## Install
 
