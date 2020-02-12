@@ -17,14 +17,13 @@ function (
         constructor: function (args) {
             this.labels = args.config.urlTemplates.map(f => {
                 if (lang.isObject(f)) {
-                    if(f.name) {
-                        return f
+                    if (f.name) {
+                        return f;
                     }
-                    else {
-                        return Object.assign(f, {
-                            name: f.url.substr(f.url.lastIndexOf('/') + 1)
-                        })
-                    }
+
+                    return Object.assign(f, {
+                        name: f.url.substr(f.url.lastIndexOf('/') + 1)
+                    });
                 }
                 return { name: f };
             });

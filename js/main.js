@@ -9,10 +9,11 @@ function (
     return declare(JBrowsePlugin, {
         constructor: function (/* args */) {
             if (!Array.prototype.find) {
+                // eslint-disable-next-line no-extend-native
                 Object.defineProperty(Array.prototype, 'find', {
                     value: function (predicate) {
                         // 1. Let O be ? ToObject(this value).
-                        if (this == null) {
+                        if (this === null) {
                             throw new TypeError('"this" is null or not defined');
                         }
 
