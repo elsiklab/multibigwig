@@ -113,11 +113,20 @@ function (
             var stats = { scoreMin: 100000000, scoreMax: -10000000 };
 
             var finishCallback = function (t) {
-                const newMax = t.scoreMean+3*t.scoreStdDev
-                if (newMax > stats.scoreMax) {
-                    stats.scoreMax = newMax
+                if(!this.config.useStdDev) {
+                    if (t.scoreMin < stats.scoreMin) {
+                        stats.scoreMin = t.scoreMin;
+                    }
+                    if (t.scoreMax > stats.scoreMax) {
+                        stats.scoreMax = t.scoreMax;
+                    }
+                } else {
+                    const newMax = t.scoreMean+3*t.scoreStdDev
+                    if (newMax > stats.scoreMax) {
+                        stats.scoreMax = newMax
+                    }
+                    stats.scoreMin=0;
                 }
-                stats.scoreMin=0;
                 if (thisB.stores.length === ++finished) {
                     successCallback(stats);
                 }
