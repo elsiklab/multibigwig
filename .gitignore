@@ -14,3 +14,4 @@ test/put-selector/
 test/util/
 test/xstyle/
 node_modules
+*.swp

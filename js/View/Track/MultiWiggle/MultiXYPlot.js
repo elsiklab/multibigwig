@@ -91,7 +91,7 @@ function (
                 });
                 originY = 1;
             } else {
-                toY = lang.hitch(this, function (val, name) {
+                toY = lang.hitch(this, function (val) {
                     return canvasHeight * (1 - dataScale.normalize(val)) / ratio;
                 });
                 originY = toY(dataScale.origin);
