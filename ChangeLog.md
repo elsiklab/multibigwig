@@ -1,3 +1,8 @@
+- Add useStdDev option for using 3 standard deviations above the mean instead of absolute scoreMax as the maximum for autoscaling
+- Add ability to specify lineWidth on subtracks
+- Add lint config for source code styling
+- Add ability to specify a whole storeClass config instead of just bigwig URL
+
 # Version 0.9.1
 
 - Add border collapse
