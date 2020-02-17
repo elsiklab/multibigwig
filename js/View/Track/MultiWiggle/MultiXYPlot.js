@@ -118,19 +118,20 @@ function (
                     var score = toY(s.score, source);
                     var elt = this.labels.find(function (l) { return l.name === f.get('source'); });
                     var color = elt.color;
+                    var height = elt.lineWidth || 1;
                     var nonCont = elt.nonCont;
                     if (score <= canvasHeight || score > originY) { // if the rectangle is visible at all
                         if (score <= originY) {
                             // bar goes upward
                             if (nonCont) {
                                 context.fillStyle = color;
-                                var height = 1;
                                 if (elt.fill) {
                                     height = originY - score + 1;
                                 }
                                 thisB._fillRectMod(context, i, score, 1, height);
                             } else {
                                 context.strokeStyle = color;
+                                context.lineWidth = height;
                                 context.beginPath();
                                 context.moveTo(i, initMap[source]);
                                 context.lineTo(i + 1, score);
@@ -149,6 +150,7 @@ function (
                             thisB._fillRectMod(context, i, top, 1,  heightm);
                         } else {
                             context.strokeStyle = color;
+                            context.lineWidth = height;
                             context.beginPath();
                             context.moveTo(i, initMap[source]);
                             context.lineTo(i + 1, score);
