@@ -1,3 +1,4 @@
+- Remove usage of deferreds to allow things like JBrowse/Store/SeqFeature/REST compatibility
 - Add useStdDev option for using 3 standard deviations above the mean instead of absolute scoreMax as the maximum for autoscaling
 - Add ability to specify lineWidth on subtracks
 - Add lint config for source code styling
