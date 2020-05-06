@@ -17,11 +17,18 @@ function (
     return declare([SeqFeatureStore], {
         constructor: function (args) {
             var thisB = this;
+            const alreadySeen = {}
             this.stores = array.map(args.urlTemplates, function (urlTemplate) {
                 if (lang.isObject(urlTemplate)) {
+                    const name = urlTemplate.name || urlTemplate.url.substr(urlTemplate.url.lastIndexOf('/') + 1)
+                    if(alreadySeen[name]) {
+                        throw new Error('duplicate name found, please check configuration')
+                    }
+                    alreadySeen[name] = true
+
                     const c = Object.assign(args, urlTemplate, {
                         urlTemplate: urlTemplate.url,
-                        name: urlTemplate.name || urlTemplate.url.substr(urlTemplate.url.lastIndexOf('/') + 1)
+                        name: name
                     });
                     if (urlTemplate.storeClass) {
                         const CLASS = dojo.global.require(urlTemplate.storeClass);
@@ -29,6 +36,11 @@ function (
                     }
                     return new BigWig(Object.assign(c, { config: c }));
                 }
+                const name = urlTemplate.substr(urlTemplate.lastIndexOf('/') + 1)
+                if(alreadySeen[name]) {
+                    throw new Error('duplicate name found, please check configuration')
+                }
+                alreadySeen[name] = true
                 const c = Object.assign(args, {
                     urlTemplate: urlTemplate,
                     name: urlTemplate.substr(urlTemplate.lastIndexOf('/') + 1)
