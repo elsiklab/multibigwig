@@ -41,7 +41,9 @@ function (
             });
 
             all(array.map(this.stores, function (store) {
-                return store._deferred.features;
+                return store._deferred?
+                    store._deferred.features:
+                    Promise.resolve()
             })).then(function () {
                 thisB._deferred.features.resolve({success: true});
                 thisB._deferred.stats.resolve({success: true});
