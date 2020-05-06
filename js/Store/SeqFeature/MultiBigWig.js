@@ -4,8 +4,6 @@ define([
     'dojo/_base/array',
     'dojo/promise/all',
     'JBrowse/Store/SeqFeature',
-    'JBrowse/Store/DeferredStatsMixin',
-    'JBrowse/Store/DeferredFeaturesMixin',
     'JBrowse/Store/SeqFeature/BigWig'
 ],
 function (
@@ -14,11 +12,9 @@ function (
     array,
     all,
     SeqFeatureStore,
-    DeferredFeaturesMixin,
-    DeferredStatsMixin,
     BigWig
 ) {
-    return declare([SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin], {
+    return declare([SeqFeatureStore], {
         constructor: function (args) {
             var thisB = this;
             this.stores = array.map(args.urlTemplates, function (urlTemplate) {
@@ -39,19 +35,9 @@ function (
                 });
                 return new BigWig(Object.assign(c, { config: c }));
             });
-
-            all(array.map(this.stores, function (store) {
-                return store._deferred?
-                    store._deferred.features:
-                    Promise.resolve()
-            })).then(function () {
-                thisB._deferred.features.resolve({success: true});
-                thisB._deferred.stats.resolve({success: true});
-            },
-            lang.hitch(this, '_failAllDeferred'));
         },
 
-        _getFeatures: function (query, featureCallback, endCallback, errorCallback) {
+        getFeatures: function (query, featureCallback, endCallback, errorCallback) {
             var thisB = this;
             var finished = 0;
             var finishCallback = function () {
@@ -66,7 +52,7 @@ function (
                         featureCallback(feat);
                     };
                 })(store.name);
-                store._getFeatures(query,
+                store.getFeatures(query,
                     f, finishCallback, errorCallback
                 );
             });
@@ -78,7 +64,7 @@ function (
             var stats = {};
 
             array.forEach(this.stores, function (store) {
-                store._getGlobalStats((function (name) {
+                store.getGlobalStats((function (name) {
                     return function (t) {
                         stats[name] = t;
                         if (thisB.stores.length === ++finished) {
@@ -88,7 +74,7 @@ function (
                 })(store.name), errorCallback);
             });
         },
-        _getGlobalStats: function (successCallback, errorCallback) {
+        getGlobalStats: function (successCallback, errorCallback) {
             var thisB = this;
             var finished = 0;
             var stats = { scoreMin: 100000000, scoreMax: -10000000 };
@@ -105,7 +91,7 @@ function (
                 }
             };
             array.forEach(this.stores, function (store) {
-                store._getGlobalStats(finishCallback, errorCallback);
+                store.getGlobalStats(finishCallback, errorCallback);
             });
         },
         getRegionStats: function (query, successCallback, errorCallback) {
