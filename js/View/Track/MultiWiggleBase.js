@@ -4,18 +4,10 @@ define([
     'dojo/_base/lang',
     'JBrowse/View/Track/WiggleBase',
     '../Dialog/MaxScoreDialog'
-],
-function (
-    declare,
-    array,
-    lang,
-    WiggleBase,
-    MaxScoreDialog
-) {
+], function (declare, array, lang, WiggleBase, MaxScoreDialog) {
     return declare(WiggleBase, {
-
         constructor: function (args) {
-            this.labels = args.config.urlTemplates.map(f => {
+            this.labels = args.config.urlTemplates.map((f) => {
                 if (lang.isObject(f)) {
                     if (f.name) {
                         return f;
@@ -28,32 +20,45 @@ function (
                 return { name: f };
             });
             if (args.config.randomizeColors) {
-                array.forEach(this.labels, function (label) {
-                    label.color = '#' + ('000000' + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6);
-                }, this);
+                array.forEach(
+                    this.labels,
+                    function (label) {
+                        label.color =
+              '#' +
+              (
+                  '000000' + Math.random().toString(16).slice(2, 8).toUpperCase()
+              ).slice(-6);
+                    },
+                    this
+                );
             }
         },
         _calculatePixelScores: function (canvasWidth, features, featureRects) {
             var pixelValues = new Array(canvasWidth);
-            array.forEach(features, function (f, i) {
-                var fRect = featureRects[i];
-                var jEnd = fRect.r;
-                var score = f.get('score');
-                var source = f.get('source');
-                for (var k = 0; k < this.labels.length; k++) {
-                    if (this.labels[k].name === source) {
-                        break;
+            array.forEach(
+                features,
+                function (f, i) {
+                    var fRect = featureRects[i];
+                    if (!fRect) return;
+                    var jEnd = fRect.r;
+                    var score = f.get('score');
+                    var source = f.get('source');
+                    for (var k = 0; k < this.labels.length; k++) {
+                        if (this.labels[k].name === source) {
+                            break;
+                        }
                     }
-                }
-                for (var j = Math.round(fRect.l); j < jEnd; j++) {
-                    if (!pixelValues[j]) {
-                        pixelValues[j] = new Array(this.labels.length);
+                    for (var j = Math.round(fRect.l); j < jEnd; j++) {
+                        if (!pixelValues[j]) {
+                            pixelValues[j] = new Array(this.labels.length);
+                        }
+                        if (!pixelValues[j][k]) {
+                            pixelValues[j][k] = { score: score, feat: f };
+                        }
                     }
-                    if (!pixelValues[j][k]) {
-                        pixelValues[j][k] = { score: score, feat: f };
-                    }
-                }
-            }, this);
+                },
+                this
+            );
 
             return pixelValues;
         },
@@ -82,7 +87,9 @@ function (
                         setCallback: function (filterInt) {
                             track.config.max_score = filterInt;
                             track.config.autoscale = 'global';
-                            track.browser.publish('/jbrowse/v1/c/tracks/replace', [track.config]);
+                            track.browser.publish('/jbrowse/v1/c/tracks/replace', [
+                                track.config
+                            ]);
                         },
                         maxScore: track.config.max_score || 0
                     }).show();
@@ -95,9 +102,17 @@ function (
             var old = this.inherited(arguments);
             var ret = '';
             if (this.config.colorizeAbout) {
-                array.forEach(this.labels, function (elt) {
-                    ret += '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' + elt.color + '"></div>' + elt.name;
-                }, this);
+                array.forEach(
+                    this.labels,
+                    function (elt) {
+                        ret +=
+              '<div style="display: block; clear:both;"><div class="colorsquare" style="background: ' +
+              elt.color +
+              '"></div>' +
+              elt.name;
+                    },
+                    this
+                );
             }
             return old.then(function (txt) {
                 txt.innerHTML += ret;
