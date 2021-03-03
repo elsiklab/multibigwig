@@ -32,6 +32,7 @@ define([
                     this
                 );
             }
+            // only works with hex colors
             if (args.config.addAlpha) {
                 array.forEach(
                     this.labels,
