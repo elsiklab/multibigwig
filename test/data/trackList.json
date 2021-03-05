@@ -1,21 +1,25 @@
 {
-   "plugins" : [
-      "MultiBigWig",
-      "HideTrackLabels"
-   ],
-   "tracks" : [
-      {
-         "seqType" : "dna",
-         "key" : "Reference sequence",
-         "storeClass" : "JBrowse/Store/Sequence/StaticChunked",
-         "chunkSize" : 20000,
-         "urlTemplate" : "seq/{refseq_dirpath}/{refseq}-",
-         "label" : "DNA",
-         "type" : "SequenceTrack",
-         "category" : "Reference sequence"
-      }
-   ],
-   "formatVersion" : 1,
-   "highResolutionMode": 2,
-   "classicMenu": true
+  "plugins": ["MultiBigWig", "HideTrackLabels"],
+  "tracks": [
+    {
+      "seqType": "dna",
+      "key": "Reference sequence",
+      "storeClass": "JBrowse/Store/Sequence/StaticChunked",
+      "chunkSize": 20000,
+      "urlTemplate": "seq/{refseq_dirpath}/{refseq}-",
+      "label": "DNA",
+      "type": "SequenceTrack",
+      "category": "Reference sequence"
+    },
+    {
+      "storeClass": "MultiBigWig/Store/SeqFeature/MultiBigWig",
+      "urlTemplates": ["volvox_microarray.bw", "volvox_microarray_negative.bw"],
+      "showTooltips": true,
+      "label": "RNA-seq BigWig XYPlot (just filenames in urlTemplates, trackList.json)",
+      "type": "MultiBigWig/View/Track/MultiWiggle/MultiXYPlot"
+    }
+  ],
+  "formatVersion": 1,
+  "highResolutionMode": 2,
+  "classicMenu": true
 }
